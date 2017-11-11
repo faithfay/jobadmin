@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="job.admin.dao.GoldDao">
+
+    <!--查年份-->
+    <select id="getYear" resultType="String">
+        SELECT DISTINCT substr(checkdate,1,4) YYYY  FROM gold ORDER BY YYYY DESC
+    </select>
+    <!--查月份-->
+    <select id="getMonth" resultType="String">
+        SELECT DISTINCT substr(checkdate,1,7) MM  FROM gold WHERE checkdate LIKE "${yyyy + '-%'}" ORDER BY MM DESC
+    </select>
+    <!--查買進最低價-->
+    <select id="getBuyTop" resultType="job.admin.bean.GoldBean">
+        SELECT buy,checkdate from gold ORDER BY buy LIMIT 15
+    </select>
+    <!--查賣出最高價-->
+    <select id="getSellTop" resultType="job.admin.bean.GoldBean">
+        SELECT sell,checkdate from gold ORDER BY sell DESC LIMIT 15
+    </select>
+    <!--月份詳細資料-->
+    <select id="getMonthDetail" resultType="job.admin.bean.GoldBean">
+        SELECT pkid,buy,sell,checkdate,checktime from gold where checkdate LIKE "${monthDetail + '%'}"
+    </select>
+</mapper>

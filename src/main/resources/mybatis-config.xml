@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!--駝峰命名 例如 A_COLUM >> aColum -->
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+        <!--自動產生主鍵-->
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="logImpl" value="LOG4J2"/>
+        <!-- 開啟延遲加載 ,就是需要時再去查詢 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 是否全部都先載入,設成false表示需要時再載入 -->
+        <setting name="aggressiveLazyLoading" value="fasle"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 加這個以後再mapper xml裡面就可以不用寫bean完整的路徑 -->
+        <package name="job.admin.bean"/>
+    </typeAliases>
+
+</configuration>
