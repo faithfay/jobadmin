@@ -4,12 +4,13 @@ import job.admin.bean.GoldBean;
 import job.admin.service.GoldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GoldAPIController {
@@ -43,5 +44,26 @@ public class GoldAPIController {
     @RequestMapping(value = "/json/gold/topsell")
     public List<GoldBean> topSell(){
         return goldService.getSellTop();
+    }
+
+    @ResponseBody
+    @RequestMapping("/gold/save/{buy}/{sell}")
+    public Map<String,String> save(@PathVariable Integer buy,@PathVariable Integer sell){
+        String chkdate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String chktime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        Map<String,String> data = new HashMap<String, String>();
+        data.put("buy",String.valueOf(buy));
+        data.put("sell",String.valueOf(sell));
+        data.put("checkdate",chkdate);
+        data.put("checktime",chktime);
+
+        int count = goldService.count(chkdate);
+        //當有資料做更新,不然新增
+        if(count > 0){
+            goldService.update(data);
+        }else{
+            goldService.save(data);
+        }
+        return data;
     }
 }
