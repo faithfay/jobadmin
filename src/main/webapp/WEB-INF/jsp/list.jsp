@@ -24,8 +24,8 @@
             <div class="text-center">
                 <h1 class="h1">Job Admin</h1>
                 <div class="btn-group" role="button" aria-label="JOB ADMIN">
-                    <a class="btn btn-info btn-lg" href="gold">黃金存摺歷史</a>
-                    <a class="btn btn-info btn-lg" href="rate">外幣歷史</a>
+                    <a class="btn btn-info btn-lg" href="gold">黃金存摺</a>
+                    <a class="btn btn-info btn-lg" href="rate">外幣排行</a>
                     <a class="btn btn-info btn-lg" href="rate">股票監控</a>
                 </div>
             </div>

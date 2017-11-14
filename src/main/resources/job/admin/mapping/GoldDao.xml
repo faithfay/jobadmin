@@ -22,4 +22,13 @@
     <select id="getMonthDetail" resultType="job.admin.bean.GoldBean">
         SELECT pkid,buy,sell,checkdate,checktime from gold where checkdate LIKE "${monthDetail + '%'}"
     </select>
+    <select id="count" resultType="Integer">
+        SELECT COUNT (*) FROM gold WHERE checkdate = #{checkdate}
+    </select>
+    <insert id="save">
+        INSERT INTO gold(buy,sell,checkdate,checktime) VALUES (#{buy},#{sell},#{checkdate},#{checktime})
+    </insert>
+    <update id="update">
+        UPDATE gold SET buy = #{buy},sell = #{sell},checktime = #{checktime} WHERE checkdate = #{checkdate}
+    </update>
 </mapper>

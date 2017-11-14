@@ -16,6 +16,7 @@
         <fileset id="fileset" name="Spring Mybatis" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/spring-mybatis.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/spring-base.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-bean.xml</file>
         </fileset>
       </configuration>
     </facet>

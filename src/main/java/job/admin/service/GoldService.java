@@ -33,4 +33,16 @@ public class GoldService {
     public List<GoldBean> getSellTop(){
         return goldDao.getSellTop();
     }
+    //網頁爬到的資料存到DB
+    public void save(Map<String,String> data){
+        goldDao.save(data);
+    }
+    //爬到的資料做更新
+    public void update(Map<String,String> data){
+        goldDao.update(data);
+    }
+    //判斷有沒有今天的資料
+    public Integer count(String checkdate){
+        return goldDao.count(checkdate);
+    }
 }
