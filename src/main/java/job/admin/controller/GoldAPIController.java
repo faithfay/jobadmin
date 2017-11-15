@@ -46,6 +46,7 @@ public class GoldAPIController {
         return goldService.getSellTop();
     }
 
+    //提供給爬蟲用的API,新增或更新DB資料
     @ResponseBody
     @RequestMapping("/gold/save/{buy}/{sell}")
     public Map<String,String> save(@PathVariable Integer buy,@PathVariable Integer sell){

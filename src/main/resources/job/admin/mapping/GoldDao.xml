@@ -22,12 +22,15 @@
     <select id="getMonthDetail" resultType="job.admin.bean.GoldBean">
         SELECT pkid,buy,sell,checkdate,checktime from gold where checkdate LIKE "${monthDetail + '%'}"
     </select>
+    <!--查看當日是否已經有資料-->
     <select id="count" resultType="Integer">
         SELECT COUNT (*) FROM gold WHERE checkdate = #{checkdate}
     </select>
+    <!--新增資料-->
     <insert id="save">
         INSERT INTO gold(buy,sell,checkdate,checktime) VALUES (#{buy},#{sell},#{checkdate},#{checktime})
     </insert>
+    <!--更新資料-->
     <update id="update">
         UPDATE gold SET buy = #{buy},sell = #{sell},checktime = #{checktime} WHERE checkdate = #{checkdate}
     </update>
