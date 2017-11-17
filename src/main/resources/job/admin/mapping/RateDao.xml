@@ -22,5 +22,15 @@
         SELECT  DISTINCT rate_name FROM rate
     </select>
 
+    <select id="getCurrentData" resultType="job.admin.bean.RateBean">
+        SELECT pkid,rate_name,rate,checkdate,checktime from rate where checkdate = #{checkdate}
+    </select>
 
+    <insert id="save">
+        INSERT INTO rate(rate_name,rate,checkdate,checktime) VALUES (#{rate_name},#{rate},#{checkdate},#{checktime})
+    </insert>
+
+    <update id="update">
+        UPDATE gold SET rate = #{rate},sell = #{sell},checktime = #{checktime} WHERE checkdate = #{checkdate}
+    </update>
 </mapper>

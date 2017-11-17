@@ -58,10 +58,14 @@ public class GoldAPIController {
         data.put("checkdate",chkdate);
         data.put("checktime",chktime);
 
-        int count = goldService.count(chkdate);
+        List<GoldBean> lists = goldService.count(chkdate);
         //當有資料做更新,不然新增
-        if(count > 0){
-            goldService.update(data);
+        if(lists.size() > 0){
+            //buy,sell有變動才更新
+            if(!data.get("buy").equals(lists.get(0).getBuy()) ||
+                    !data.get("sell").equals(lists.get(0).getSell())){
+                goldService.update(data);
+            }
         }else{
             goldService.save(data);
         }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RateService {
@@ -32,5 +33,18 @@ public class RateService {
     public List<String> getRateName(){
         return rateDao.getRateName();
     }
+
+    public List<RateBean> getCurrentData(String checkdate){
+        return rateDao.getCurrentData();
+    }
+
+    public void save(Map<String,String> data){
+        return rateDao.save(data);
+    }
+
+    public void update(Map<String,String> data){
+        return rateDao.update(data);
+    }
+
 
 }

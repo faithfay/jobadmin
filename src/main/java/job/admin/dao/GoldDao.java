@@ -16,5 +16,5 @@ public interface GoldDao {
     void save(Map<String,String> data);
     void update(Map<String,String> data);
     List<GoldBean> getCurrentData(@Param(value = "checkdate")String checkdate);
-    Integer count(@Param(value = "checkdate")String checkdate);
+    List<GoldBean> count(@Param(value = "checkdate")String checkdate);
 }
