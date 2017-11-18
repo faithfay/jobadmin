@@ -12,18 +12,18 @@
     </select>
     <!--查買進最低價-->
     <select id="getBuyTop" resultType="job.admin.bean.GoldBean">
-        SELECT buy,checkdate from gold ORDER BY buy LIMIT 15
+        SELECT buy,checkdate FROM gold ORDER BY buy LIMIT 15
     </select>
     <!--查賣出最高價-->
     <select id="getSellTop" resultType="job.admin.bean.GoldBean">
-        SELECT sell,checkdate from gold ORDER BY sell DESC LIMIT 15
+        SELECT sell,checkdate FROM gold ORDER BY sell DESC LIMIT 15
     </select>
     <!--月份詳細資料-->
     <select id="getMonthDetail" resultType="job.admin.bean.GoldBean">
-        SELECT pkid,buy,sell,checkdate,checktime from gold where checkdate LIKE "${monthDetail + '%'}"
+        SELECT pkid,buy,sell,checkdate,checktime FROM gold WHERE checkdate LIKE "${monthDetail + '%'}"
     </select>
     <!--查看當日是否已經有資料-->
-    <select id="count" resultType="job.admin.bean.GoldBean">
+    <select id="getCurrentData" resultType="job.admin.bean.GoldBean">
         SELECT pkid,buy,sell,checkdate,checktime FROM gold WHERE checkdate = #{checkdate}
     </select>
     <!--新增資料-->

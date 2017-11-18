@@ -42,7 +42,7 @@ public class GoldService {
         goldDao.update(data);
     }
     //判斷有沒有今天的資料
-    public List<GoldBean> count(String checkdate){
-        return goldDao.count(checkdate);
+    public List<GoldBean> getCurrentData(String checkdate){
+        return goldDao.getCurrentData(checkdate);
     }
 }

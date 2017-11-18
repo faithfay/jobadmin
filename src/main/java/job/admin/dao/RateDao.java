@@ -13,7 +13,7 @@ public interface RateDao {
     List<RateBean> getMonthDetail(@Param(value = "rate_name") String rate_name,@Param(value = "monthDetail") String monthDetail);
     List<RateBean> getLowPriceTop(@Param(value = "rate_name") String rate_name);
 
-    List<RateBean> getCurrentData(String checkdate);
+    List<RateBean> getCurrentData(@Param(value = "rate_name") String rate_name,@Param(value = "checkdate") String checkdate);
     void save(Map<String,String> data);
     void update(Map<String,String> data);
 }

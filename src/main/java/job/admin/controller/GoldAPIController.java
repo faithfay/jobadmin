@@ -58,7 +58,7 @@ public class GoldAPIController {
         data.put("checkdate",chkdate);
         data.put("checktime",chktime);
 
-        List<GoldBean> lists = goldService.count(chkdate);
+        List<GoldBean> lists = goldService.getCurrentData(chkdate);
         //當有資料做更新,不然新增
         if(lists.size() > 0){
             //buy,sell有變動才更新

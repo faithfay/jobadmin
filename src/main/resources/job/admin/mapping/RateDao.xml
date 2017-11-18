@@ -11,11 +11,11 @@
     </select>
 
     <select id="getLowPriceTop" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime from rate WHERE rate_name = #{rate_name} ORDER BY rate LIMIT 10
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} ORDER BY rate LIMIT 10
     </select>
 
     <select id="getMonthDetail" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime from rate where rate_name = #{rate_name} AND checkdate LIKE "${monthDetail + '%'}"
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} AND checkdate LIKE "${monthDetail + '%'}"
     </select>
 
     <select id="getRateName" resultType="String">
@@ -23,7 +23,7 @@
     </select>
 
     <select id="getCurrentData" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime from rate where checkdate = #{checkdate}
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
     </select>
 
     <insert id="save">
@@ -31,6 +31,6 @@
     </insert>
 
     <update id="update">
-        UPDATE gold SET rate = #{rate},sell = #{sell},checktime = #{checktime} WHERE checkdate = #{checkdate}
+        UPDATE rate SET rate = #{rate},checktime = #{checktime} WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
     </update>
 </mapper>

@@ -34,16 +34,16 @@ public class RateService {
         return rateDao.getRateName();
     }
 
-    public List<RateBean> getCurrentData(String checkdate){
-        return rateDao.getCurrentData();
+    public List<RateBean> getCurrentData(String rate_name,String checkdate){
+        return rateDao.getCurrentData(rate_name,checkdate);
     }
 
     public void save(Map<String,String> data){
-        return rateDao.save(data);
+        rateDao.save(data);
     }
 
     public void update(Map<String,String> data){
-        return rateDao.update(data);
+        rateDao.update(data);
     }
 
 
