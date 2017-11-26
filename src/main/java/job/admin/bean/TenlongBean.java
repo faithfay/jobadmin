@@ -1,7 +1,10 @@
 package job.admin.bean;
 
-public class TenlongBean {
+import java.io.Serializable;
+
+public class TenlongBean implements Serializable {
     private int pkid;
+    private String catelogs;
     private String bookname;
     private String sell;
     private String imgurl;
@@ -12,6 +15,7 @@ public class TenlongBean {
     public String toString() {
         return "TenlongBean{" +
                 "pkid=" + pkid +
+                ", catelogs='" + catelogs + '\'' +
                 ", bookname='" + bookname + '\'' +
                 ", sell='" + sell + '\'' +
                 ", imgurl='" + imgurl + '\'' +
@@ -26,6 +30,14 @@ public class TenlongBean {
 
     public void setPkid(int pkid) {
         this.pkid = pkid;
+    }
+
+    public String getCatelogs() {
+        return catelogs;
+    }
+
+    public void setCatelogs(String catelogs) {
+        this.catelogs = catelogs;
     }
 
     public String getBookname() {

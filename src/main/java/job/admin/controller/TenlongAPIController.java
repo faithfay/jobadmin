@@ -1,6 +1,8 @@
 package job.admin.controller;
 
 import job.admin.bean.TenlongBean;
+import job.admin.service.TenlongService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,14 +14,20 @@ import java.util.List;
 @Controller
 public class TenlongAPIController {
 
+    @Autowired
+    private TenlongService tenlongService;
+
     //接收傳來的JSON物件
     //將HTTP狀態設為200
-    @RequestMapping(value="/tenlong",consumes = "application/json")
+    @RequestMapping(value="/api/tenlong/first",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void test(@RequestBody List<TenlongBean> tenlongBeanList){
-            //新增到資料庫
-//        for(TenlongBean tenlongBean:tenlongBeanList){
-//            System.out.println(tenlongBean.toString());
-//        }
+    public void first(@RequestBody List<TenlongBean> tenlongBeanList){
+        tenlongService.save(tenlongBeanList);
+    }
+
+    @RequestMapping(value="/api/tenlong/save",consumes = "application/json")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void save(@RequestBody List<TenlongBean> tenlongBeanList){
+        tenlongService.save(tenlongBeanList);
     }
 }
