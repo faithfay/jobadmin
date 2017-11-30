@@ -36,5 +36,12 @@ public class JobAdminController {
         mod.addAttribute("rname",rateService.getRateName());
         return "rate";
     }
+
+    //偽天瓏
+    @RequestMapping(value = "/tenlong")
+    public String tenlong(){
+
+        return "";
+    }
 }
 

@@ -7,6 +7,10 @@ import java.util.List;
 public interface TenlongDao {
 
     void first(List<TenlongBean> tenlongBeanList);
+
     void save(TenlongBean tenlongBean);
-    void del(TenlongBean tenlongBean);
+
+    void delAll(TenlongBean tenlongBean);
+
+    List<TenlongBean> list();
 }

@@ -13,7 +13,7 @@
         </foreach>
     </insert>
 
-    <delete id="del">
-
+    <delete id="delAll">
+      DELETE FROM tenlong
     </delete>
 </mapper>

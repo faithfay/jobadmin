@@ -8,20 +8,33 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TenlongService {
+public class TenlongService implements TenlongDao{
 
     @Autowired
     private TenlongDao tenlongDao;
 
     public void first(List<TenlongBean> tenlongBeanList){
+
         tenlongDao.first(tenlongBeanList);
     }
+
+    public void save(TenlongBean tenlongBean) {
+
+    }
+
     public void save(List<TenlongBean> tenlongBeanList){
         for(TenlongBean tenlongBean:tenlongBeanList){
             tenlongDao.save(tenlongBean);
         }
     }
-    public void del(TenlongBean tenlongBean){
-        tenlongDao.del(tenlongBean);
+
+    public void delAll(TenlongBean tenlongBean){
+
+        tenlongDao.delAll(tenlongBean);
+    }
+
+    public List<TenlongBean> list() {
+
+        return null;
     }
 }
