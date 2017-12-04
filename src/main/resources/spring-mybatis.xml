@@ -26,6 +26,22 @@
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!-- 指定MAPPING XML檔案位置 -->
         <property name="mapperLocations" value="classpath:job/admin/mapping/*.xml"/>
+        <!--分夜插件5的設定方式-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=sqlite
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- 掃描MAPPER對應的介面讓SPRING能夠@Autowired -->

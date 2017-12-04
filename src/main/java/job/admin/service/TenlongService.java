@@ -33,8 +33,8 @@ public class TenlongService implements TenlongDao{
         tenlongDao.delAll(tenlongBean);
     }
 
-    public List<TenlongBean> list() {
+    public List<TenlongBean> list(String catelog) {
 
-        return null;
+        return tenlongDao.list(catelog);
     }
 }

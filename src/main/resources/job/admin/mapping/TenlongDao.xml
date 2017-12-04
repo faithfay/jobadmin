@@ -16,4 +16,8 @@
     <delete id="delAll">
       DELETE FROM tenlong
     </delete>
+
+    <select id="list" resultType="job.admin.bean.TenlongBean">
+        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog}
+    </select>
 </mapper>
