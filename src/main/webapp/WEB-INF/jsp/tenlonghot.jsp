@@ -3,8 +3,11 @@
 <html>
 <head>
     <title>天瓏圖書排行榜</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <c:set var="urlpath" value="${pageContext.request.contextPath}"></c:set>
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="${urlpath}/css/style.css">
     <script src="${urlpath}/js/jquery-3.2.1.min.js"></script>
     <script src="${urlpath}/js/popper.min.js"></script>
     <script src="${urlpath}/js/bootstrap.js"></script>
@@ -34,10 +37,8 @@
 </head>
 <body>
 <nav></nav>
-<main class="container">
-    <div class="row">
-        <div class="card-columns" id="hotlist"></div>
-    </div>
+<main class="container-fluid">
+    <div class="card-columns" id="hotlist"></div>
 </main>
 </body>
 </html>
