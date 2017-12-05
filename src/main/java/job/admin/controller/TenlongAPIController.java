@@ -25,7 +25,8 @@ public class TenlongAPIController {
 
     //接收傳來的JSON物件並存到DB
     //將HTTP狀態設為200
-    @GetMapping(value="/api/tenlong/save",consumes = "application/json")
+//    @GetMapping(value="/api/tenlong/save",consumes = "application/json")
+    @PostMapping(value="/api/tenlong/save",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void save(@RequestBody List<TenlongBean> tenlongBeanList){
         //將爬蟲傳來的資料存到DB

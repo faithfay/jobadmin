@@ -2,9 +2,11 @@ package job.admin.controller;
 
 import job.admin.service.GoldService;
 import job.admin.service.RateService;
+import job.admin.service.TenlongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -15,6 +17,8 @@ public class JobAdminController {
     private GoldService goldService;
     @Autowired
     private RateService rateService;
+    @Autowired
+    private TenlongService tenlongService;
 
     //首頁
     @RequestMapping("/")
@@ -37,11 +41,16 @@ public class JobAdminController {
         return "rate";
     }
 
-    //偽天瓏
-    @RequestMapping(value = "/tenlong")
-    public String tenlong(){
+    //偽天瓏排行
+    @RequestMapping(value = "/tenlonghot/{alias}")
+    public String tenlong(Model model,@PathVariable String alias){
 
-        return "";
+        if(alias != null && !"".equals(alias)){
+            model.addAttribute("hotalias",alias);
+        }else{
+            model.addAttribute("hotalias","zhtop");
+        }
+        return "tenlonghot";
     }
 }
 

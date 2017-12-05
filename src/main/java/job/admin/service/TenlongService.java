@@ -13,24 +13,8 @@ public class TenlongService implements TenlongDao{
     @Autowired
     private TenlongDao tenlongDao;
 
-    public void first(List<TenlongBean> tenlongBeanList){
-
-        tenlongDao.first(tenlongBeanList);
-    }
-
-    public void save(TenlongBean tenlongBean) {
-
-    }
-
     public void save(List<TenlongBean> tenlongBeanList){
-        for(TenlongBean tenlongBean:tenlongBeanList){
-            tenlongDao.save(tenlongBean);
-        }
-    }
-
-    public void delAll(TenlongBean tenlongBean){
-
-        tenlongDao.delAll(tenlongBean);
+        tenlongDao.save(tenlongBeanList);
     }
 
     public List<TenlongBean> list(String catelog) {
