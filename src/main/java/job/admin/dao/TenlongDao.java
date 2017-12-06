@@ -9,5 +9,5 @@ public interface TenlongDao {
 
     void save(List<TenlongBean> tenlongBean);
 
-    List<TenlongBean> list(@Param(value = "catelog") String catelog);
+    List<TenlongBean> hotList(@Param(value = "catelog") String catelog);
 }

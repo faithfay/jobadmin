@@ -17,8 +17,8 @@ public class TenlongService implements TenlongDao{
         tenlongDao.save(tenlongBeanList);
     }
 
-    public List<TenlongBean> list(String catelog) {
+    public List<TenlongBean> hotList(String catelog) {
 
-        return tenlongDao.list(catelog);
+        return tenlongDao.hotList(catelog);
     }
 }

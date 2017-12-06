@@ -25,7 +25,6 @@ public class TenlongAPIController {
 
     //接收傳來的JSON物件並存到DB
     //將HTTP狀態設為200
-//    @GetMapping(value="/api/tenlong/save",consumes = "application/json")
     @PostMapping(value="/api/tenlong/save",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void save(@RequestBody List<TenlongBean> tenlongBeanList){
@@ -40,7 +39,7 @@ public class TenlongAPIController {
         //查詢前設定開始頁,每頁幾頁
         PageHelper.startPage(pg,pgsize);
         //去查詢
-        List<TenlongBean> lists = tenlongService.list(catelog);
+        List<TenlongBean> lists = tenlongService.hotList(catelog);
         //將分頁好的結果集返回頁面
         PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,pgsize);
 

@@ -41,15 +41,21 @@ public class JobAdminController {
         return "rate";
     }
 
-    //偽天瓏排行
-    @RequestMapping(value = "/tenlonghot/{alias}")
+    //偽天瓏
+    @RequestMapping("/tenlong/{alias}")
     public String tenlong(Model model,@PathVariable String alias){
 
-        if(alias != null && !"".equals(alias)){
-            model.addAttribute("hotalias",alias);
-        }else{
-            model.addAttribute("hotalias","zhtop");
-        }
+        model.addAttribute("hotalias",alias);
+
+        return "tenlong";
+    }
+
+    //偽天瓏排行
+    @RequestMapping(value = "/tenlonghot/{alias}")
+    public String tenlonghot(Model model,@PathVariable String alias){
+
+        model.addAttribute("hotalias",alias);
+
         return "tenlonghot";
     }
 }
