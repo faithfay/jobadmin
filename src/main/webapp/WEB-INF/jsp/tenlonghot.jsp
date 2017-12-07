@@ -102,8 +102,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
         </ul>
-        <a href="${urlpath}/tenlonghot/zhtop" class="nav-link">繁Top</a>
-        <a href="${urlpath}/tenlonghot/cntop" class="nav-link">簡Top</a>
+        <a href="${urlpath}/tenlonghot/zhtop" class="nav-link text-primary">繁Top</a>
+        <a href="${urlpath}/tenlonghot/cntop" class="nav-link text-primary">簡Top</a>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Search</button>
