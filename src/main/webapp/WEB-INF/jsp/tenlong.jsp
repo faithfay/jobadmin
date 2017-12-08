@@ -15,26 +15,44 @@
     <script type="text/javascript">
         $().ready(function(){
             ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'','get');
-        })
 
+            //查詢框按下ENTER事件
+            $('input[type=search]').keyup(function(e){
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if(code == 13){
+                    queryBook(this.value);
+                }
+            })
+        })
+        function queryBook(queryStr){
+            var queryString = $('input[type=search]').val();
+            queryString = clearString(queryString);
+            if(queryString.length > 0){
+                //判斷分頁連結
+                $('input[name=querystatus]').val(queryString);
+                queryString = 'qs=' + queryString + '&pg=1';
+                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",queryString,'post');
+            }
+            //查完清空輸入框
+            $('input[type=search]').val('');
+        }
         //CALL AJAX
         function ajaxCall(apiurl,param,apitype){
-            console.log('apiurl:',apiurl)
-            console.log('param:',param)
-            console.log('apitype:',apitype)
             $.ajax({
                 type: apitype,
                 url:  apiurl,
                 data: param,
                 success: function(result){
-                    //清空內容
-                    $('#hotlist').empty();
-                    //新增內容HTML
-                    handleContent(result);
+                    if(result.list.length > 0){
+                        //清空內容
+                        $('#hotlist').empty();
+                        //新增內容HTML
+                        handleContent(result);
 
-                    //清空分頁並重新新增
-                    $('#pagemenu').empty();
-                    loadPage(result);
+                        //清空分頁並重新新增
+                        $('#pagemenu').empty();
+                        loadPage(result);
+                    }
                 }
             });
         }
@@ -53,19 +71,6 @@
                 cardhtml.appendTo('#hotlist');
             });
         }
-        //查詢
-        function queryBook(){
-            var queryString = $('input[type=search]').val();
-            queryString = clearString(queryString);
-            if(queryString.length > 0){
-                //判斷分頁連結
-                $('input[name=querystatus]').val(queryString);
-                queryString = 'qs=' + queryString + '&pg=1';
-                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",queryString,'post');
-            }
-            //查完清空輸入框
-            $('input[type=search]').val('');
-        }
         //CHANGE PAGE
         function chgPage(nowPage){
             var ptag = $('input[name=querystatus]').val();
@@ -74,7 +79,7 @@
                 ptag = ptag + '&pg=' + nowPage;
                 ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",ptag,'post');
             }else{
-                ajaxCall("${urlpath}/api/tenlong/list/${hotalias}",'pg=' + nowPage,'get');
+                ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'pg=' + nowPage,'get');
             }
         }
         //HANDLE FIRST PAGE
@@ -136,13 +141,12 @@
         </ul>
         <a href="${urlpath}/tenlong/zh" class="nav-link text-primary">繁體書</a>
         <a href="${urlpath}/tenlong/zhtop" class="nav-link text-primary">繁體書TOP</a>
-        <a href="${urlpath}/tenlonghot/cn" class="nav-link text-primary">簡體書</a>
-        <a href="${urlpath}/tenlonghot/cntop" class="nav-link text-primary">簡體書Top</a>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+        <a href="${urlpath}/tenlong/cn" class="nav-link text-primary">簡體書</a>
+        <a href="${urlpath}/tenlong/cntop" class="nav-link text-primary">簡體書Top</a>
+        <div class="form-inline my-2 my-lg-0">
+            <input class="form-control form-control-sm" type="search" placeholder="簡單關鍵字" aria-label="Search">
             <input type="hidden" name="querystatus">
-            <button class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="button" onclick="queryBook()">Search</button>
-        </form>
+        </div>
     </div>
 </nav>
 </body>
