@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 public class TenlongAPIController {
@@ -34,15 +36,32 @@ public class TenlongAPIController {
 
     //顯示
     @GetMapping("/api/tenlong/lists/{catelog}")
-    public PageInfo<TenlongBean> lists(Model model, @PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg){
+    public PageInfo<TenlongBean> lists(@PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg){
 
         //查詢前設定開始頁,每頁幾頁
         PageHelper.startPage(pg,pgsize);
         //去查詢
         List<TenlongBean> lists = tenlongService.hotList(catelog);
         //將分頁好的結果集返回頁面
-        PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,pgsize);
+        PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,10);
+        return pages;
+    }
 
+    @PostMapping("/api/tenlong/query/{catelog}")
+    public PageInfo<TenlongBean> queryBook(@PathVariable String catelog,@RequestParam(defaultValue = "") String qs, @RequestParam(defaultValue = "1") Integer pg){
+        String queryStr = null;
+        if(qs != null && !"".equals(qs)){
+            String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+            Pattern pattern = Pattern.compile(regEx);
+            Matcher matcher = pattern.matcher(qs);
+            queryStr = matcher.replaceAll("").replaceAll(" ","");
+        }
+
+        PageHelper.startPage(pg,pgsize);
+        //去查詢
+        List<TenlongBean> lists = tenlongService.queryBook(catelog,queryStr);
+        //將分頁好的結果集返回頁面,查詢頁次總數10筆
+        PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,10);
         return pages;
     }
 }

@@ -50,13 +50,5 @@ public class JobAdminController {
         return "tenlong";
     }
 
-    //偽天瓏排行
-    @RequestMapping(value = "/tenlonghot/{alias}")
-    public String tenlonghot(Model model,@PathVariable String alias){
-
-        model.addAttribute("hotalias",alias);
-
-        return "tenlonghot";
-    }
 }
 

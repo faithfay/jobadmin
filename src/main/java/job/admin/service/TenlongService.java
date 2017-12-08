@@ -21,4 +21,9 @@ public class TenlongService implements TenlongDao{
 
         return tenlongDao.hotList(catelog);
     }
+
+    public List<TenlongBean> queryBook(String catelog, String queryStr) {
+
+        return tenlongDao.queryBook(catelog,queryStr);
+    }
 }

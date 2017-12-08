@@ -12,4 +12,10 @@
     <select id="hotList" resultType="job.admin.bean.TenlongBean">
         SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog}
     </select>
+
+    <select id="queryBook" resultType="job.admin.bean.TenlongBean">
+        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong
+        WHERE catelogs = #{catelog}
+            AND bookname LIKE UPPER("${'%' + queryStr + '%'}")
+    </select>
 </mapper>
