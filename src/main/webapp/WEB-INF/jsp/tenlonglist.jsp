@@ -11,6 +11,32 @@
     <script src="${urlpath}/js/popper.min.js"></script>
     <script src="${urlpath}/js/bootstrap.min.js"></script>
 
+    <script>
+        $().ready(function(){
+            $('#queryForm').submit(function(){
+                var iqk = $('input[name=qq]').val();
+            //     if(iqk != null && iqk != ''){
+            //         alert('a')
+                    $('input[name=qs]').attr('value',iqk);
+            //     }else{
+            //         alert('b')
+            //         $('input[name=qs]').attr('value','');
+            //         alert($('input[name=qs]').attr('value'))
+            //     }
+            })
+
+            var qstag = $('input[name=qs]').val();
+            console.log('>',qstag)
+
+            var pgtag = $('.page-item > a');
+            $.each(pgtag,function(index,data) {
+                if(qstag != null && qstag != ''){
+                    $(data).attr('href',data.href + '&qs=' + qstag)
+                }
+            });
+
+        });
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
@@ -28,8 +54,8 @@
         <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
             <li class="page-item"><a class="page-link" href="#">First</a></li>
             <c:forEach var="p" items="${tenlongs.navigatepageNums}">
-                <%--分業壞掉 當查詢後結果不正確--%>
-                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}<c:if test="${qs != null && '' != qa}">&qs=${qs}</c:if>">${p}</a></li>
+
+                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">${p}</a></li>
             </c:forEach>
             <li class="page-item"><a class="page-link" href="#">Last</a></li>
         </ul>
@@ -37,9 +63,11 @@
 </nav>
 <main class="container">
     <h1 class="text-center m-3">偽!天瓏圖書查詢</h1>
-    <form class="form my-2 my-lg-0" method="post">
+    <form id="queryForm" class="form my-2 my-lg-0" method="post">
         <div class="input-group my-3">
-            <input class="form-control form-control-lg" type="search" name="qs" placeholder="簡易關鍵字">
+            <%--分業壞掉 當查詢後結果不正確--%>
+            <input class="form-control form-control-lg" type="search" name="qq" placeholder="簡易關鍵字">
+            <input type="hidden" name="qs" value="${qs}">
         </div>
     </form>
     <section>

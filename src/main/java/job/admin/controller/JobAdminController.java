@@ -69,12 +69,15 @@ public class JobAdminController {
     @RequestMapping(value = "/tenlonglist/{catelog}")
     public String tenlongList(Model model, @PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg,@RequestParam(required = false) String qs){
         List<TenlongBean> lists;
-
+        String tmpqs = null;
         if(qs != null && !"".equals(qs)){
             //查詢前設定開始頁,每頁幾頁
             PageHelper.startPage(pg,pgsize-5);
             //去查詢
-            lists = tenlongService.queryBook(catelog,jobUtil.regStr(qs));
+            tmpqs=jobUtil.regStr(qs);
+            System.out.println("tmpqs>>>>"+tmpqs);
+            lists = tenlongService.queryBook(catelog,tmpqs);
+
         }else{
             //查詢前設定開始頁,每頁幾頁
             PageHelper.startPage(pg,pgsize-5);
@@ -87,6 +90,7 @@ public class JobAdminController {
         model.addAttribute("hotalias",catelog);
         //如果有查詢就返回
         model.addAttribute("qs",qs);
+        System.out.println(">>>>>>>>>>>"+qs);
         return "tenlonglist";
     }
 
