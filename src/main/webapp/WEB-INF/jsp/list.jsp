@@ -3,7 +3,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>黃金存摺</title>
+    <title>Faith Project</title>
     <c:set var="urlpath" value="${pageContext.request.contextPath}"></c:set>
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/bootstrap.min.css">
 
@@ -26,7 +26,7 @@
                 <div class="btn-group" role="button" aria-label="JOB ADMIN">
                     <a class="btn btn-info btn-lg" href="gold">黃金存摺</a>
                     <a class="btn btn-info btn-lg" href="rate">外幣排行</a>
-                    <a class="btn btn-info btn-lg" href="rate">股票監控</a>
+                    <a class="btn btn-info btn-lg" href="tenlong/zhtop">偽!天瓏圖書</a>
                 </div>
             </div>
         </div>

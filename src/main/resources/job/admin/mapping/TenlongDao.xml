@@ -9,13 +9,15 @@
         </foreach>
     </insert>
     <!--排行書查詢-->
-    <select id="hotList" resultType="job.admin.bean.TenlongBean">
+    <select id="list" resultType="job.admin.bean.TenlongBean">
         SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog}
     </select>
 
     <select id="queryBook" resultType="job.admin.bean.TenlongBean">
         SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong
         WHERE catelogs = #{catelog}
+        <if test="queryStr != null and '' != queryStr">
             AND bookname LIKE UPPER("${'%' + queryStr + '%'}")
+        </if>
     </select>
 </mapper>

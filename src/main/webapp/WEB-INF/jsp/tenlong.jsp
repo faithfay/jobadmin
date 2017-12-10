@@ -14,6 +14,7 @@
 
     <script type="text/javascript">
         $().ready(function(){
+            //頁面載入後撈資料
             ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'','get');
 
             //查詢框按下ENTER事件
@@ -23,7 +24,8 @@
                     queryBook(this.value);
                 }
             })
-        })
+        });
+        //按下輸入框查詢
         function queryBook(queryStr){
             var queryString = $('input[type=search]').val();
             queryString = clearString(queryString);
@@ -31,6 +33,7 @@
                 //判斷分頁連結
                 $('input[name=querystatus]').val(queryString);
                 queryString = 'qs=' + queryString + '&pg=1';
+                //發動查詢
                 ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",queryString,'post');
             }
             //查完清空輸入框
@@ -43,12 +46,12 @@
                 url:  apiurl,
                 data: param,
                 success: function(result){
+                    //有資料才顯示內容
                     if(result.list.length > 0){
                         //清空內容
                         $('#hotlist').empty();
                         //新增內容HTML
                         handleContent(result);
-
                         //清空分頁並重新新增
                         $('#pagemenu').empty();
                         loadPage(result);
@@ -127,27 +130,29 @@
     </script>
 </head>
 <body>
-<main class="container-fluid">
-    <div class="card-columns" id="hotlist"></div>
-</main>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-bottom sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
-        </ul>
+        <a href="${urlpath}/tenlonglist/zhtop" class="nav-link text-primary">清單模式</a>
         <a href="${urlpath}/tenlong/zh" class="nav-link text-primary">繁體書</a>
         <a href="${urlpath}/tenlong/zhtop" class="nav-link text-primary">繁體書TOP</a>
         <a href="${urlpath}/tenlong/cn" class="nav-link text-primary">簡體書</a>
         <a href="${urlpath}/tenlong/cntop" class="nav-link text-primary">簡體書Top</a>
+
+        <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
+        </ul>
+
         <div class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm" type="search" placeholder="簡單關鍵字" aria-label="Search">
             <input type="hidden" name="querystatus">
         </div>
     </div>
 </nav>
+<main class="container-fluid">
+    <div class="card-columns" id="hotlist"></div>
+</main>
 </body>
 </html>

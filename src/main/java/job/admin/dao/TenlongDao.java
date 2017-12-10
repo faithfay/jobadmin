@@ -9,6 +9,6 @@ public interface TenlongDao {
 
     void save(List<TenlongBean> tenlongBean);
 
-    List<TenlongBean> hotList(@Param(value = "catelog") String catelog);
+    List<TenlongBean> list(@Param(value = "catelog") String catelog);
     List<TenlongBean> queryBook(@Param(value = "catelog") String catelog,@Param(value = "queryStr") String queryStr);
 }

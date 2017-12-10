@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import job.admin.bean.TenlongBean;
 import job.admin.service.TenlongService;
+import job.admin.util.JobUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class TenlongAPIController {
     @Autowired
     private TenlongService tenlongService;
 
+    @Autowired
+    private JobUtil jobUtil;
+
     //接收傳來的JSON物件並存到DB
     //將HTTP狀態設為200
     @PostMapping(value="/api/tenlong/save",consumes = "application/json")
@@ -41,7 +45,7 @@ public class TenlongAPIController {
         //查詢前設定開始頁,每頁幾頁
         PageHelper.startPage(pg,pgsize);
         //去查詢
-        List<TenlongBean> lists = tenlongService.hotList(catelog);
+        List<TenlongBean> lists = tenlongService.list(catelog);
         //將分頁好的結果集返回頁面
         PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,10);
         return pages;
@@ -51,10 +55,7 @@ public class TenlongAPIController {
     public PageInfo<TenlongBean> queryBook(@PathVariable String catelog,@RequestParam(defaultValue = "") String qs, @RequestParam(defaultValue = "1") Integer pg){
         String queryStr = null;
         if(qs != null && !"".equals(qs)){
-            String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-            Pattern pattern = Pattern.compile(regEx);
-            Matcher matcher = pattern.matcher(qs);
-            queryStr = matcher.replaceAll("").replaceAll(" ","");
+            queryStr = jobUtil.regStr(qs);
         }
 
         PageHelper.startPage(pg,pgsize);
