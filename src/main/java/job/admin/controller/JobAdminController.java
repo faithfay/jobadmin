@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class JobAdminController {
     //首頁
     @RequestMapping("/")
     public String index(){
+
         return "list";
     }
 
@@ -67,20 +69,18 @@ public class JobAdminController {
 
     //偽天瓏清單顯示
     @RequestMapping(value = "/tenlonglist/{catelog}")
-    public String tenlongList(Model model, @PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg,@RequestParam(required = false) String qs){
+    public String tenlongList(Model model, @PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg, @RequestParam(required = false) String qs){
         List<TenlongBean> lists;
-        String tmpqs = null;
+
         if(qs != null && !"".equals(qs)){
             //查詢前設定開始頁,每頁幾頁
-            PageHelper.startPage(pg,pgsize-5);
+            PageHelper.startPage(pg,pgsize);
             //去查詢
-            tmpqs=jobUtil.regStr(qs);
-            System.out.println("tmpqs>>>>"+tmpqs);
-            lists = tenlongService.queryBook(catelog,tmpqs);
-
+            lists = tenlongService.queryBook(catelog,qs);
+            model.addAttribute("qs",qs);
         }else{
             //查詢前設定開始頁,每頁幾頁
-            PageHelper.startPage(pg,pgsize-5);
+            PageHelper.startPage(pg,pgsize);
             lists = tenlongService.list(catelog);
         }
         //將分頁好的結果集返回頁面
@@ -88,9 +88,7 @@ public class JobAdminController {
 
         model.addAttribute("tenlongs",pages);
         model.addAttribute("hotalias",catelog);
-        //如果有查詢就返回
-        model.addAttribute("qs",qs);
-        System.out.println(">>>>>>>>>>>"+qs);
+
         return "tenlonglist";
     }
 

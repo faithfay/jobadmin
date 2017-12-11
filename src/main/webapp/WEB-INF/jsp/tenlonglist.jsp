@@ -13,33 +13,63 @@
 
     <script>
         $().ready(function(){
-            $('#queryForm').submit(function(){
-                var iqk = $('input[name=qq]').val();
-            //     if(iqk != null && iqk != ''){
-            //         alert('a')
-                    $('input[name=qs]').attr('value',iqk);
-            //     }else{
-            //         alert('b')
-            //         $('input[name=qs]').attr('value','');
-            //         alert($('input[name=qs]').attr('value'))
-            //     }
-            })
-
-            var qstag = $('input[name=qs]').val();
-            console.log('>',qstag)
-
-            var pgtag = $('.page-item > a');
-            $.each(pgtag,function(index,data) {
-                if(qstag != null && qstag != ''){
-                    $(data).attr('href',data.href + '&qs=' + qstag)
-                }
+            //滑鼠經過書讓字變大
+            $('#bookcontent a').mouseover(function(){
+               $(this).addClass('h2');
             });
 
+            //滑鼠離開後恢復字體
+            $('#bookcontent a').mouseout(function(){
+                $(this).removeClass('h2');
+            });
+
+            //輸入框值設到隱藏框
+            $('#queryForm').submit(function(){
+                $('input[name=qs]').attr('value',$('input[name=qq]').val());
+            });
+
+            //當按分頁連結,如果隱藏框有值就加上參數
+            $('.page-link').click(function(){
+                var tag = $('input[name=qs]').val();
+                var hreftag = $(this).attr('href');
+                if(tag != null && '' != tag){
+                    $(this).attr('href',hreftag + '&qs=' + tag);
+                }
+            });
         });
     </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+
+<main class="container">
+    <h1 class="text-center m-3">偽!天瓏圖書查詢</h1>
+
+    <form id="queryForm" class="form my-2 my-lg-0" method="post" action="${urlpath}/tenlonglist/${hotalias}">
+        <input class="form-control form-control-lg my-3" type="search" name="qq" placeholder="簡易關鍵字">
+        <input type="hidden" name="qs" value="${qs}">
+    </form>
+
+    <section>
+        <table class="table table-hover table-sm table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">售價</th>
+                    <th scope="col" class="text-center">書名</th>
+                </tr>
+            </thead>
+            <tbody id="bookcontent">
+            <c:forEach items="${tenlongs.list}" var="list">
+                <tr>
+                    <td>$${list.sell}</td>
+                    <td><a class="text-info" href="${list.bookurl}" target="tenlong">${list.bookname}</a></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light fixed-bottom">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,42 +82,21 @@
         <a href="${urlpath}/tenlonglist/cntop" class="nav-link text-primary">簡體書Top</a>
 
         <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
-            <li class="page-item"><a class="page-link" href="#">First</a></li>
+            <c:if test="${tenlongs.navigateFirstPage != 0 && tenlongs.isFirstPage == false}">
+                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=1">First</a></li>
+            </c:if>
             <c:forEach var="p" items="${tenlongs.navigatepageNums}">
-
-                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">${p}</a></li>
+                <li class="page-item<c:if test="${tenlongs.pageNum == p}"> active</c:if>">
+                    <a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
+                        <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
+                    </a>
+                </li>
             </c:forEach>
-            <li class="page-item"><a class="page-link" href="#">Last</a></li>
+            <c:if test="${tenlongs.navigateLastPage != 0 && tenlongs.isLastPage == false}">
+                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${tenlongs.pages}">Last</a></li>
+            </c:if>
         </ul>
     </div>
 </nav>
-<main class="container">
-    <h1 class="text-center m-3">偽!天瓏圖書查詢</h1>
-    <form id="queryForm" class="form my-2 my-lg-0" method="post">
-        <div class="input-group my-3">
-            <%--分業壞掉 當查詢後結果不正確--%>
-            <input class="form-control form-control-lg" type="search" name="qq" placeholder="簡易關鍵字">
-            <input type="hidden" name="qs" value="${qs}">
-        </div>
-    </form>
-    <section>
-        <table class="table table-hover table-sm table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">售價</th>
-                    <th scope="col" class="text-center">書名</th>
-                </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${tenlongs.list}" var="list">
-                <tr>
-                    <td>$${list.sell}</td>
-                    <td><a class="text-info" href="${list.bookurl}" target="tenlong">${list.bookname}</a></td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </section>
-</main>
 </body>
 </html>
