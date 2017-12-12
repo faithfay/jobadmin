@@ -40,6 +40,51 @@
     </script>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="${urlpath}/tenlong/zhtop" class="nav-link">圖列模式</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlonglist/zh" class="nav-link">繁體書</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlonglist/zhtop" class="nav-link">繁體書TOP</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlonglist/cn" class="nav-link">簡體書</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlonglist/cntop" class="nav-link">簡體書Top</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    分頁
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <c:forEach var="p" items="${tenlongs.navigatepageNums}">
+                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
+                            <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
+                        </a>
+                    </c:forEach>
+
+                    <div class="dropdown-divider"></div>
+                    <c:if test="${tenlongs.navigateFirstPage != 0 && tenlongs.isFirstPage == false}">
+                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=1">First</a>
+                    </c:if>
+                    <c:if test="${tenlongs.navigateLastPage != 0 && tenlongs.isLastPage == false}">
+                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${tenlongs.pages}">Last</a>
+                    </c:if>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <main class="container">
     <h1 class="text-center m-3">偽!天瓏圖書查詢</h1>
@@ -68,35 +113,5 @@
         </table>
     </section>
 </main>
-
-<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light fixed-bottom">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a href="${urlpath}/tenlong/zhtop" class="nav-link text-primary">圖列模式</a>
-        <a href="${urlpath}/tenlonglist/zh" class="nav-link text-primary">繁體書</a>
-        <a href="${urlpath}/tenlonglist/zhtop" class="nav-link text-primary">繁體書TOP</a>
-        <a href="${urlpath}/tenlonglist/cn" class="nav-link text-primary">簡體書</a>
-        <a href="${urlpath}/tenlonglist/cntop" class="nav-link text-primary">簡體書Top</a>
-
-        <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
-            <c:if test="${tenlongs.navigateFirstPage != 0 && tenlongs.isFirstPage == false}">
-                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=1">First</a></li>
-            </c:if>
-            <c:forEach var="p" items="${tenlongs.navigatepageNums}">
-                <li class="page-item<c:if test="${tenlongs.pageNum == p}"> active</c:if>">
-                    <a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
-                        <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
-                    </a>
-                </li>
-            </c:forEach>
-            <c:if test="${tenlongs.navigateLastPage != 0 && tenlongs.isLastPage == false}">
-                <li class="page-item"><a class="page-link" href="${urlpath}/tenlonglist/${hotalias}?pg=${tenlongs.pages}">Last</a></li>
-            </c:if>
-        </ul>
-    </div>
-</nav>
 </body>
 </html>
