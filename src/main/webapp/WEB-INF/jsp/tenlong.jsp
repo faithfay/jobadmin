@@ -8,7 +8,7 @@
     <c:set var="urlpath" value="${pageContext.request.contextPath}"></c:set>
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/style.css">
-    <script src="${urlpath}/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="${urlpath}/js/popper.min.js"></script>
     <script src="${urlpath}/js/bootstrap.js"></script>
 
@@ -89,14 +89,25 @@
         function loadPage(datas){
             firstPage(datas);
             loopPage(datas);
-            lastPAge(datas);
+            firstAndLastPage(datas);
         }
         //HANDLE FIRST PAGE
-        function firstPage(datas){
-            if(datas.isFirstPage){
-                $('<li class="page-item disabled"><a class="page-link" href="#" onclick="chgPage(1)">First</a></li>').appendTo('#pagemenu');
+        function firstAndLastPage(datas){
+
+            if(datas.navigateFirstPage != 0 && datas.isFirstPage == false){
+                $('#firstpg').removeClass('disabled');
+                $('#firstpg').attr('href',"${urlpath}/tenlong/${hotalias}?pg=1");
             }else{
-                $('<li class="page-item"><a class="page-link" href="#" onclick="chgPage(1)">First</a></li>').appendTo('#pagemenu');
+                $('#firstpg').addClass('disabled');
+                $('#firstpg').attr('href','#');
+            }
+
+            if(datas.navigateLastPage != 0 && datas.isLastPage == false){
+                $('#firstpg').removeClass('disabled');
+                $('#firstpg').attr('href',"${urlpath}/tenlonglist/${hotalias}?pg=${tenlongs.pages}");
+            }else{
+                $('#firstpg').addClass('disabled');
+                $('#firstpg').attr('href','#');
             }
         }
         //HANDLE LOOP PAGES
@@ -112,11 +123,7 @@
         }
         //HANDLE LAST PAGE
         function lastPAge(datas){
-            if(datas.isLastPage){
-                $('<li class="page-item disabled"><a class="page-link" href="#" onclick="chgPage(' + datas.pages + ')">Last</a></li>').appendTo('#pagemenu');
-            }else{
-                $('<li class="page-item"><a class="page-link" href="#" onclick="chgPage(' + datas.pages + ')">Last</a></li>').appendTo('#pagemenu');
-            }
+
         }
         //過濾字串
         function clearString(s){
@@ -130,17 +137,55 @@
     </script>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a href="${urlpath}/tenlonglist/zhtop" class="nav-link text-primary">清單模式</a>
-        <a href="${urlpath}/tenlong/zh" class="nav-link text-primary">繁體書</a>
-        <a href="${urlpath}/tenlong/zhtop" class="nav-link text-primary">繁體書TOP</a>
-        <a href="${urlpath}/tenlong/cn" class="nav-link text-primary">簡體書</a>
-        <a href="${urlpath}/tenlong/cntop" class="nav-link text-primary">簡體書Top</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="${urlpath}/tenlonglist/zhtop" class="nav-link">清單模式</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlong/zh" class="nav-link">繁體書</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlong/zhtop" class="nav-link">繁體書TOP</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlong/cn" class="nav-link">簡體書</a>
+            </li>
+            <li class="nav-item">
+                <a href="${urlpath}/tenlong/cntop" class="nav-link">簡體書Top</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    分頁
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="looppg">
+                    <c:forEach var="p" items="${tenlongs.navigatepageNums}">
+                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
+                            <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
+                        </a>
+                    </c:forEach>
+
+                    <div class="dropdown-divider" id="flpg"></div>
+                    <a id="firstpg" class="dropdown-item" href="#">First</a>
+                    <a id="lastpg" class="dropdown-item" href="#">Last</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
+
+
+
 
         <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
         </ul>
