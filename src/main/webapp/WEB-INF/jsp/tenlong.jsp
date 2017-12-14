@@ -8,14 +8,14 @@
     <c:set var="urlpath" value="${pageContext.request.contextPath}"></c:set>
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${urlpath}/css/style.css">
-    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="${urlpath}/js/jquery-3.2.1.min.js"></script>
     <script src="${urlpath}/js/popper.min.js"></script>
-    <script src="${urlpath}/js/bootstrap.js"></script>
+    <script src="${urlpath}/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $().ready(function(){
             //頁面載入後撈資料
-            ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'','get');
+            ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'');
 
             //查詢框按下ENTER事件
             $('input[type=search]').keyup(function(e){
@@ -25,24 +25,11 @@
                 }
             })
         });
-        //按下輸入框查詢
-        function queryBook(queryStr){
-            var queryString = $('input[type=search]').val();
-            queryString = clearString(queryString);
-            if(queryString.length > 0){
-                //判斷分頁連結
-                $('input[name=querystatus]').val(queryString);
-                queryString = 'qs=' + queryString + '&pg=1';
-                //發動查詢
-                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",queryString,'post');
-            }
-            //查完清空輸入框
-            $('input[type=search]').val('');
-        }
+
         //CALL AJAX
-        function ajaxCall(apiurl,param,apitype){
+        function ajaxCall(apiurl,param){
             $.ajax({
-                type: apitype,
+                type: 'get',
                 url:  apiurl,
                 data: param,
                 success: function(result){
@@ -53,12 +40,41 @@
                         //新增內容HTML
                         handleContent(result);
                         //清空分頁並重新新增
-                        $('#pagemenu').empty();
+                        $('#pgmenu').empty();
                         loadPage(result);
                     }
                 }
             });
         }
+
+        //CHANGE PAGE
+        function chgPage(nowPage){
+            var ptag = $('input[name=querystatus]').val();
+            var param = '';
+            //透過tag判斷是不是查詢後,是的話就改變ajax呼叫的網址
+            if('' != ptag && ptag.length > 0 ){
+                param = 'qs=' + ptag + '&pg=' + nowPage;
+                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",param);
+            }else{
+                ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'pg=' + nowPage);
+            }
+        }
+
+        //按下輸入框查詢
+        function queryBook(queryStr){
+            var queryString = $('input[type=search]').val();
+            queryString = clearString(queryString);
+            if(queryString.length > 0){
+                //判斷分頁連結
+                $('input[name=querystatus]').val(queryString);
+                queryString = 'qs=' + queryString + '&pg=1';
+                //發動查詢
+                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",queryString);
+            }
+            //查完清空輸入框
+            $('input[type=search]').val('');
+        }
+
         //HANDLE CONTENT
         function handleContent(datas){
             var res = datas.list;
@@ -74,56 +90,60 @@
                 cardhtml.appendTo('#hotlist');
             });
         }
-        //CHANGE PAGE
-        function chgPage(nowPage){
-            var ptag = $('input[name=querystatus]').val();
-            //透過tag判斷是不是查詢後,是的話就改變ajax呼叫的網址
-            if('' != ptag && ptag.length > 0 ){
-                ptag = ptag + '&pg=' + nowPage;
-                ajaxCall("${urlpath}/api/tenlong/query/${hotalias}",ptag,'post');
-            }else{
-                ajaxCall("${urlpath}/api/tenlong/lists/${hotalias}",'pg=' + nowPage,'get');
-            }
-        }
-        //HANDLE FIRST PAGE
-        function loadPage(datas){
-            firstPage(datas);
-            loopPage(datas);
-            firstAndLastPage(datas);
-        }
-        //HANDLE FIRST PAGE
-        function firstAndLastPage(datas){
 
+        //HANDLE MENU
+        function loadPage(datas){
+            staticpg();
+            loopPage(datas);
+        }
+
+        function staticpg(){
+            $('<li class="nav-item"><a href="${urlpath}/tenlonglist/zhtop" class="nav-link">清單模式</a></li>').appendTo('#pgmenu');
+            $('<li class="nav-item"><a href="${urlpath}/tenlong/zh" class="nav-link">繁體書</a></li>').appendTo('#pgmenu');
+            $('<li class="nav-item"><a href="${urlpath}/tenlong/zhtop" class="nav-link">繁體書TOP</a></li>').appendTo('#pgmenu');
+            $('<li class="nav-item"><a href="${urlpath}/tenlong/cn" class="nav-link">簡體書</a></li>').appendTo('#pgmenu');
+            $('<li class="nav-item"><a href="${urlpath}/tenlong/cntop" class="nav-link">簡體書Top</a></li>').appendTo('#pgmenu');
+        }
+
+        function firstAndLastPage(datas){
             if(datas.navigateFirstPage != 0 && datas.isFirstPage == false){
-                $('#firstpg').removeClass('disabled');
-                $('#firstpg').attr('href',"${urlpath}/tenlong/${hotalias}?pg=1");
-            }else{
-                $('#firstpg').addClass('disabled');
-                $('#firstpg').attr('href','#');
+                $('<a id="firstpg" class="dropdown-item" href="#" onclick="chgPage(1)">First</a>').appendTo('#looppg');
             }
 
             if(datas.navigateLastPage != 0 && datas.isLastPage == false){
-                $('#firstpg').removeClass('disabled');
-                $('#firstpg').attr('href',"${urlpath}/tenlonglist/${hotalias}?pg=${tenlongs.pages}");
-            }else{
-                $('#firstpg').addClass('disabled');
-                $('#firstpg').attr('href','#');
+                $('<a id="lastpg" class="dropdown-item" href="#" onclick="chgPage(' + datas.pages + ')">Last</a>').appendTo('#looppg');
             }
         }
+
         //HANDLE LOOP PAGES
         function loopPage(datas){
             var pgs = datas.navigatepageNums;
-            $.each(pgs,function(index,data) {
-                if(datas.pageNum == data){
-                    $('<li class="page-item active"><a class="page-link" href="#" onclick="chgPage(' + data + ')">' + data + '</a></li>').appendTo('#pagemenu');
-                }else{
-                    $('<li class="page-item"><a class="page-link" href="#" onclick="chgPage(' + data + ')">' + data + '</a></li>').appendTo('#pagemenu');
-                }
-            })
-        }
-        //HANDLE LAST PAGE
-        function lastPAge(datas){
+            var zero = '';
 
+            if(datas.total > 0){
+                $('<li class="nav-item dropdown" id="pgdropdown"></li>').appendTo('#pgmenu');
+                $('<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分頁</a>').appendTo('#pgdropdown');
+                $('<div class="dropdown-menu" aria-labelledby="navbarDropdown" id="looppg"></div>').appendTo('#pgdropdown');
+
+                $.each(pgs,function(index,data) {
+
+                    if(data > 0 && data <= 9){
+                        zero = '00';
+                    }
+
+                    if(data > 9 && data <= 99){
+                        zero = '0';
+                    }
+
+                    if(datas.pageNum == data){
+                        $('<a class="dropdown-item active" href="#" onclick="chgPage(' + data + ')">' + zero + data + '</a>').appendTo('#looppg');
+                    }else{
+                        $('<a class="dropdown-item" href="#" onclick="chgPage(' + data + ')">' + zero + data + '</a>').appendTo('#looppg');
+                    }
+                })
+                $('<div class="dropdown-divider"></div>').appendTo('#looppg');
+                firstAndLastPage(datas);
+            }
         }
         //過濾字串
         function clearString(s){
@@ -144,58 +164,20 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a href="${urlpath}/tenlonglist/zhtop" class="nav-link">清單模式</a>
-            </li>
-            <li class="nav-item">
-                <a href="${urlpath}/tenlong/zh" class="nav-link">繁體書</a>
-            </li>
-            <li class="nav-item">
-                <a href="${urlpath}/tenlong/zhtop" class="nav-link">繁體書TOP</a>
-            </li>
-            <li class="nav-item">
-                <a href="${urlpath}/tenlong/cn" class="nav-link">簡體書</a>
-            </li>
-            <li class="nav-item">
-                <a href="${urlpath}/tenlong/cntop" class="nav-link">簡體書Top</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    分頁
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="looppg">
-                    <c:forEach var="p" items="${tenlongs.navigatepageNums}">
-                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
-                            <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
-                        </a>
-                    </c:forEach>
-
-                    <div class="dropdown-divider" id="flpg"></div>
-                    <a id="firstpg" class="dropdown-item" href="#">First</a>
-                    <a id="lastpg" class="dropdown-item" href="#">Last</a>
-                </div>
-            </li>
+        <ul class="navbar-nav mr-auto" id="pgmenu">
+            <li class="nav-item"><a href="${urlpath}/tenlonglist/zhtop" class="nav-link">清單模式</a></li>
+            <li class="nav-item"><a href="${urlpath}/tenlong/zh" class="nav-link">繁體書</a></li>
+            <li class="nav-item"><a href="${urlpath}/tenlong/zhtop" class="nav-link">繁體書TOP</a></li>
+            <li class="nav-item"><a href="${urlpath}/tenlong/cn" class="nav-link">簡體書</a></li>
+            <li class="nav-item"><a href="${urlpath}/tenlong/cntop" class="nav-link">簡體書Top</a></li>
         </ul>
-    </div>
-</nav>
-
-
-
-
-
-
-
-
-        <ul class="pagination navbar-nav mr-auto pagination-sm" id="pagemenu">
-        </ul>
-
         <div class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm" type="search" placeholder="簡單關鍵字" aria-label="Search">
             <input type="hidden" name="querystatus">
         </div>
     </div>
 </nav>
+
 <main class="container-fluid">
     <div class="card-columns" id="hotlist"></div>
 </main>

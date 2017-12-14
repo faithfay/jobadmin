@@ -76,7 +76,7 @@ public class JobAdminController {
             //查詢前設定開始頁,每頁幾頁
             PageHelper.startPage(pg,pgsize);
             //去查詢
-            lists = tenlongService.queryBook(catelog,qs);
+            lists = tenlongService.queryBook(catelog,jobUtil.regStr(qs));
             model.addAttribute("qs",qs);
         }else{
             //查詢前設定開始頁,每頁幾頁

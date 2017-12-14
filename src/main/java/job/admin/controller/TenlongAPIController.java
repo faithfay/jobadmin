@@ -51,7 +51,7 @@ public class TenlongAPIController {
         return pages;
     }
 
-    @PostMapping("/api/tenlong/query/{catelog}")
+    @GetMapping("/api/tenlong/query/{catelog}")
     public PageInfo<TenlongBean> queryBook(@PathVariable String catelog,@RequestParam(defaultValue = "") String qs, @RequestParam(defaultValue = "1") Integer pg){
         String queryStr = null;
         if(qs != null && !"".equals(qs)){
