@@ -10,6 +10,7 @@ public class TenlongBean implements Serializable {
     private String imgurl;
     private String bookurl;
     private String checkdate;
+    private int totalcount; //count(*)用
 
     @Override
     public String toString() {
@@ -21,6 +22,7 @@ public class TenlongBean implements Serializable {
                 ", imgurl='" + imgurl + '\'' +
                 ", bookurl='" + bookurl + '\'' +
                 ", checkdate='" + checkdate + '\'' +
+                ", totalcount=" + totalcount +
                 '}';
     }
 
@@ -78,5 +80,13 @@ public class TenlongBean implements Serializable {
 
     public void setCheckdate(String checkdate) {
         this.checkdate = checkdate;
+    }
+
+    public int getTotalcount() {
+        return totalcount;
+    }
+
+    public void setTotalcount(int totalcount) {
+        this.totalcount = totalcount;
     }
 }

@@ -29,6 +29,15 @@ public class TenlongAPIController {
     @Autowired
     private JobUtil jobUtil;
 
+    //檢查是要更新還是新增
+    //將HTTP狀態設為200
+    @PostMapping(value="/api/tenlong/chkbook",consumes = "application/json")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void saveOfUpdate(@RequestBody TenlongBean tenlongBean){
+
+        tenlongService.checkBook(tenlongBean);
+    }
+
     //接收傳來的JSON物件並存到DB
     //將HTTP狀態設為200
     @PostMapping(value="/api/tenlong/save",consumes = "application/json")

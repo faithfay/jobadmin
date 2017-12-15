@@ -14,7 +14,13 @@ public class TenlongService implements TenlongDao{
     private TenlongDao tenlongDao;
 
     public void save(List<TenlongBean> tenlongBeanList){
+
         tenlongDao.save(tenlongBeanList);
+    }
+
+    public void checkBook(TenlongBean tenlongBean) {
+
+        tenlongDao.checkBook(tenlongBean);
     }
 
     public List<TenlongBean> list(String catelog) {

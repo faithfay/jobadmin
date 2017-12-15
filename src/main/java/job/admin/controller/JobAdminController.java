@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,6 +44,7 @@ public class JobAdminController {
     //黃金存摺
     @RequestMapping("/gold")
     public String gold(Model mod){
+
         //預設傳送資料庫有哪些年
         mod.addAttribute("dyear",goldService.getGoldYear());
         return "gold";
@@ -54,6 +53,7 @@ public class JobAdminController {
     //外幣匯率
     @RequestMapping(value = "/rate")
     public String rate(Model mod){
+
         mod.addAttribute("rname",rateService.getRateName());
         return "rate";
     }
@@ -63,7 +63,6 @@ public class JobAdminController {
     public String tenlong(Model model,@PathVariable String alias){
 
         model.addAttribute("hotalias",alias);
-
         return "tenlong";
     }
 
@@ -91,6 +90,5 @@ public class JobAdminController {
 
         return "tenlonglist";
     }
-
 }
 

@@ -87,7 +87,6 @@
 </nav>
 
 <main class="container">
-    <h1 class="text-center m-3">偽!天瓏圖書查詢</h1>
 
     <form id="queryForm" class="form my-2 my-lg-0" method="post" action="${urlpath}/tenlonglist/${hotalias}">
         <input class="form-control form-control-lg my-3" type="search" name="qq" placeholder="簡易關鍵字">

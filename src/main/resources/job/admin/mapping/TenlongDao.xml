@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="job.admin.dao.TenlongDao">
-    <!--爬蟲呼叫大量新增-->
+    <!--API 爬蟲呼叫大量新增-->
     <insert id="save" useGeneratedKeys="true" keyProperty="pkid">
         INSERT INTO tenlong(catelogs,bookname,sell,imgurl,bookurl,checkdate) VALUES
         <foreach item="item" collection="list" separator=",">
             (#{item.catelogs},#{item.bookname},#{item.sell},#{item.imgurl},#{item.bookurl},#{item.checkdate})
         </foreach>
     </insert>
-    <!--排行書查詢-->
+
+    <!--查詢-->
     <select id="list" resultType="job.admin.bean.TenlongBean">
-        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog}
+        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog} ORDER BY pkid DESC
     </select>
 
+    <!--關鍵字查詢-->
     <select id="queryBook" resultType="job.admin.bean.TenlongBean">
         SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong
         WHERE catelogs = #{catelog}
@@ -20,4 +22,23 @@
             AND bookname LIKE UPPER("${'%' + queryStr + '%'}")
         </if>
     </select>
+
+    <!--API 檢查有沒有新書,沒有新增,已經有的更新-->
+    <insert id="checkBook" parameterType="job.admin.bean.TenlongBean">
+        <selectKey resultType="int" order="BEFORE" keyProperty="totalcount" >
+            SELECT count(*) FROM tenlong WHERE bookname = #{bookname} AND catelogs = #{catelogs}
+        </selectKey>
+        <if test="totalcount == 0">
+            INSERT INTO tenlong(catelogs,bookname,sell,imgurl,bookurl,checkdate)
+            VALUES (#{catelogs},#{bookname},#{sell},#{imgurl},#{bookurl},#{checkdate})
+        </if>
+        <if test="totalcount > 0">
+            UPDATE  tenlong SET
+            sell = #{sell},
+            imgurl = #{imgurl},
+            bookurl = #{bookurl},
+            checkdate = #{checkdate}
+            WHERE catelogs = #{catelogs} AND bookname = #{bookname}
+        </if>
+    </insert>
 </mapper>
