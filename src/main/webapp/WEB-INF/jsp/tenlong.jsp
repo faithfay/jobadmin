@@ -126,7 +126,6 @@
                 $('<div class="dropdown-menu" aria-labelledby="navbarDropdown" id="looppg"></div>').appendTo('#pgdropdown');
 
                 $.each(pgs,function(index,data) {
-
                     if(data > 0 && data <= 9){
                         zero = '00';
                     }

@@ -68,9 +68,16 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <c:forEach var="p" items="${tenlongs.navigatepageNums}">
-                        <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
-                            <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
-                        </a>
+                        <c:if test="${p == tenlongs.pageNum}">
+                            <a class="dropdown-item active" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
+                                <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
+                            </a>
+                        </c:if>
+                        <c:if test="${p != tenlongs.pageNum}">
+                            <a class="dropdown-item" href="${urlpath}/tenlonglist/${hotalias}?pg=${p}">
+                                <c:if test="${p > 0 && p <=9}">00</c:if><c:if test="${p > 9 && p <=99}">0</c:if>${p}
+                            </a>
+                        </c:if>
                     </c:forEach>
 
                     <div class="dropdown-divider"></div>
