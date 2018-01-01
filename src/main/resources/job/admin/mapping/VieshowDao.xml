@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="job.admin.dao.VieshowDao">
+
+    <select id="queryMove" resultType="job.admin.bean.VieshowBean">
+        SELECT pkid,movename,img,url,checkdate FROM vieshow WHERE checkdate = #{checkdate} ORDER BY checkdate DESC
+    </select>
+
+    <!--API 新增電影資訊,已經有的話就更新檢查日期-->
+    <insert id="saveOfUpdate" parameterType="job.admin.bean.VieshowBean" useGeneratedKeys="true" keyProperty="pkid">
+        <selectKey resultType="int" order="BEFORE" keyProperty="totalcount" >
+            SELECT count(*) FROM vieshow WHERE movename = #{movename}
+        </selectKey>
+
+        <if test="totalcount == 0">
+            INSERT INTO vieshow(movename,img,url,checkdate)
+            VALUES (#{movename},#{img},#{url},#{checkdate})
+        </if>
+        <if test="totalcount > 0">
+            UPDATE  vieshow SET
+            checkdate = #{checkdate}
+            WHERE movename = #{movename}
+        </if>
+    </insert>
+</mapper>
