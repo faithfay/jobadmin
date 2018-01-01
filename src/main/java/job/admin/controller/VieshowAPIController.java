@@ -23,6 +23,7 @@ public class VieshowAPIController {
         for(VieshowBean vieshowBean:vieshowBeanList){
             vieshowService.saveOfUpdate(vieshowBean);
         }
+
     }
 
 }
