@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VieshowDao {
 
-    void saveOfUpdate(VieshowBean vieshowBeanList);
+    void saveOrUpdate(VieshowBean vieshowBeanList);
 
     List<VieshowBean> queryMove(@Param("checkdate") String checkdate,@Param("mname") String mname);
 }

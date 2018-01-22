@@ -15,14 +15,12 @@ public class VieshowService{
     private VieshowDao vieshowDao;
 
 
-    @Transactional
-    public void saveOfUpdate(VieshowBean vieshowBeanList){
+    public void saveOrUpdate(VieshowBean vieshowBeanList){
 
-            vieshowDao.saveOfUpdate(vieshowBeanList);
+            vieshowDao.saveOrUpdate(vieshowBeanList);
     }
 
     //顯示並查詢當月上映電影
-    @Transactional(readOnly = true)
     public List<VieshowBean> queryMove(String checkdate,String mname){
 
         return vieshowDao.queryMove(checkdate,mname);

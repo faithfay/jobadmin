@@ -13,7 +13,7 @@
     </select>
 
     <!--API 新增電影資訊,已經有的話就更新檢查日期-->
-    <insert id="saveOfUpdate" parameterType="job.admin.bean.VieshowBean" useGeneratedKeys="true" keyProperty="pkid">
+    <insert id="saveOrUpdate" parameterType="job.admin.bean.VieshowBean" useGeneratedKeys="true" keyProperty="pkid">
         <selectKey resultType="int" order="BEFORE" keyProperty="totalcount" >
             SELECT count(*) FROM vieshow WHERE mname = #{mname}
         </selectKey>

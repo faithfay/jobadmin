@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RequestMapping("/api/vieshow")
@@ -20,7 +21,7 @@ public class VieshowAPIController {
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void news(@RequestBody List<VieshowBean> vieshowBeanList){
         for(VieshowBean vieshowBean:vieshowBeanList){
-            vieshowService.saveOfUpdate(vieshowBean);
+            vieshowService.saveOrUpdate(vieshowBean);
         }
     }
 
