@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class VieshowBean implements Serializable {
     private int pkid;
-    private String movename;
-    private String img;
-    private String url;
+    private String mname;
+    private String mimg;
+    private String murl;
     private String checkdate;
     private int totalcount; //count(*)用
 
@@ -14,9 +14,9 @@ public class VieshowBean implements Serializable {
     public String toString() {
         return "VieshowBean{" +
                 "pkid=" + pkid +
-                ", movename='" + movename + '\'' +
-                ", img='" + img + '\'' +
-                ", url='" + url + '\'' +
+                ", mname='" + mname + '\'' +
+                ", mimg='" + mimg + '\'' +
+                ", murl='" + murl + '\'' +
                 ", checkdate='" + checkdate + '\'' +
                 ", totalcount=" + totalcount +
                 '}';
@@ -30,28 +30,28 @@ public class VieshowBean implements Serializable {
         this.pkid = pkid;
     }
 
-    public String getMovename() {
-        return movename;
+    public String getMname() {
+        return mname;
     }
 
-    public void setMovename(String movename) {
-        this.movename = movename;
+    public void setMname(String mname) {
+        this.mname = mname;
     }
 
-    public String getImg() {
-        return img;
+    public String getMimg() {
+        return mimg;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setMimg(String mimg) {
+        this.mimg = mimg;
     }
 
-    public String getUrl() {
-        return url;
+    public String getMurl() {
+        return murl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setMurl(String murl) {
+        this.murl = murl;
     }
 
     public String getCheckdate() {

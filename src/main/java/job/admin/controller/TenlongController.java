@@ -17,14 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-
+@RequestMapping("/tenlong")
 @Controller
-public class JobAdminController {
+public class TenlongController {
 
-    @Autowired
-    private GoldService goldService;
-    @Autowired
-    private RateService rateService;
     @Autowired
     private TenlongService tenlongService;
     @Autowired
@@ -34,32 +30,8 @@ public class JobAdminController {
     @Value("${tenlong.page.size}")
     private Integer pgsize;
 
-    //首頁
-    @RequestMapping("/")
-    public String index(){
-
-        return "list";
-    }
-
-    //黃金存摺
-    @RequestMapping("/gold")
-    public String gold(Model mod){
-
-        //預設傳送資料庫有哪些年
-        mod.addAttribute("dyear",goldService.getGoldYear());
-        return "gold";
-    }
-
-    //外幣匯率
-    @RequestMapping(value = "/rate")
-    public String rate(Model mod){
-
-        mod.addAttribute("rname",rateService.getRateName());
-        return "rate";
-    }
-
     //偽天瓏圖案顯示
-    @RequestMapping("/tenlong/{alias}")
+    @RequestMapping("/image/{alias}")
     public String tenlong(Model model,@PathVariable String alias){
 
         model.addAttribute("hotalias",alias);
@@ -67,7 +39,7 @@ public class JobAdminController {
     }
 
     //偽天瓏清單顯示
-    @RequestMapping(value = "/tenlonglist/{catelog}")
+    @RequestMapping(value = "/list/{catelog}")
     public String tenlongList(Model model, @PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg, @RequestParam(required = false) String qs){
         List<TenlongBean> lists;
 

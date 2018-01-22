@@ -3,23 +3,29 @@
 <mapper namespace="job.admin.dao.VieshowDao">
 
     <select id="queryMove" resultType="job.admin.bean.VieshowBean">
-        SELECT pkid,movename,img,url,checkdate FROM vieshow WHERE checkdate = #{checkdate} ORDER BY checkdate DESC
+        SELECT pkid,mname,murl,mimg,checkdate FROM vieshow WHERE checkdate LIKE "${checkdate + '%'}"
+
+        <if test="mname != null and test != ''">
+            AND mname LIKE "${'%' + mname + '%'}"
+        </if>
+
+        ORDER BY pkid DESC
     </select>
 
     <!--API 新增電影資訊,已經有的話就更新檢查日期-->
     <insert id="saveOfUpdate" parameterType="job.admin.bean.VieshowBean" useGeneratedKeys="true" keyProperty="pkid">
         <selectKey resultType="int" order="BEFORE" keyProperty="totalcount" >
-            SELECT count(*) FROM vieshow WHERE movename = #{movename}
+            SELECT count(*) FROM vieshow WHERE mname = #{mname}
         </selectKey>
 
         <if test="totalcount == 0">
-            INSERT INTO vieshow(movename,img,url,checkdate)
-            VALUES (#{movename},#{img},#{url},#{checkdate})
+            INSERT INTO vieshow(mname,murl,mimg,checkdate)
+            VALUES (#{mname},#{murl},#{mimg},#{checkdate})
         </if>
         <if test="totalcount > 0">
             UPDATE  vieshow SET
             checkdate = #{checkdate}
-            WHERE movename = #{movename}
+            WHERE mname = #{mname}
         </if>
     </insert>
 </mapper>

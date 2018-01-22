@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequestMapping("/api/gold")
 @Controller
 public class GoldAPIController {
 
@@ -20,35 +21,37 @@ public class GoldAPIController {
 
     //月份所有資料
     @ResponseBody
-    @RequestMapping(value = "/json/gold/month/{monthDetail}")
+    @RequestMapping(value = "/month/{monthDetail}")
     public List<GoldBean> monthDetail(@PathVariable String monthDetail){
+
         return goldService.getMonthDetail(monthDetail);
     }
 
     //得到月份
     @ResponseBody
-    @RequestMapping(value = "/json/gold/{yy}")
+    @RequestMapping(value = "/{yy}")
     public List<String> month(@PathVariable Integer yy){
+
         return goldService.getGoldMonth(String.valueOf(yy));
     }
 
     //最低買進排行
     @ResponseBody
-    @RequestMapping(value = "/json/gold/topbuy")
+    @RequestMapping(value = "/topbuy")
     public List<GoldBean> topBuy(){
         return goldService.getBuyTop();
     }
 
     //最高賣出排行
     @ResponseBody
-    @RequestMapping(value = "/json/gold/topsell")
+    @RequestMapping(value = "/topsell")
     public List<GoldBean> topSell(){
         return goldService.getSellTop();
     }
 
     //提供給爬蟲用的API,新增或更新DB資料
     @ResponseBody
-    @RequestMapping("/gold/save/{buy}/{sell}")
+    @RequestMapping("/save/{buy}/{sell}")
     public Map<String,String> save(@PathVariable Integer buy,@PathVariable Integer sell){
         String chkdate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         String chktime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());

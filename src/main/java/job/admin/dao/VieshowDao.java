@@ -9,5 +9,5 @@ public interface VieshowDao {
 
     void saveOfUpdate(VieshowBean vieshowBeanList);
 
-    List<VieshowBean> queryMove(@Param("checkdate") String checkdate);
+    List<VieshowBean> queryMove(@Param("checkdate") String checkdate,@Param("mname") String mname);
 }

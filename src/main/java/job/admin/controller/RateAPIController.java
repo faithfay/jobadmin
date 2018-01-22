@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@RequestMapping("/api/rate")
 @Controller
 public class RateAPIController {
 
@@ -20,27 +21,28 @@ public class RateAPIController {
 
     //得到該年所有月份
     @ResponseBody
-    @RequestMapping(value = "/json/rate/{yy}")
+    @RequestMapping(value = "/{yy}")
     public List<String> year(@PathVariable Integer yy){
+
         return rateService.getMonth(String.valueOf(yy));
     }
 
     //月份所有資料
     @ResponseBody
-    @RequestMapping(value = "/json/rate/month/{rateName}/{monthDetail}")
+    @RequestMapping(value = "/month/{rateName}/{monthDetail}")
     public List<RateBean> monthDetail(@PathVariable String rateName,@PathVariable String monthDetail){
         return rateService.getMonthDetail(rateName,monthDetail);
     }
 
     //列出外幣名稱
     @ResponseBody
-    @RequestMapping(value = "/json/rate/name")
+    @RequestMapping(value = "/name")
     public List<String> name(){
         return rateService.getRateName();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/json/rate/top")
+    @RequestMapping(value = "/top")
     public List<RateBean> top(@RequestParam(value = "rn",defaultValue = "") String name){
         if ("".equals(name)){
             return rateService.getLowPriceTop("日圓");
@@ -51,7 +53,7 @@ public class RateAPIController {
 
     @ResponseBody
     //{xxx:.+} 意思是說網址有. ,因為傳網址有小數點 用這樣讓他認得
-    @RequestMapping("/rate/save/{name}/{rate:.+}")
+    @RequestMapping("/save/{name}/{rate:.+}")
     public Map<String,String> save(@PathVariable String name, @PathVariable Float rate){
         String chkdate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         String chktime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());

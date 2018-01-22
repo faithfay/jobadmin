@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@RequestMapping("/api/tenlong")
 @RestController
 public class TenlongAPIController {
 
@@ -31,7 +32,7 @@ public class TenlongAPIController {
 
     //檢查是要更新還是新增
     //將HTTP狀態設為200
-    @PostMapping(value="/api/tenlong/chkbook",consumes = "application/json")
+    @PostMapping(value="/chkbook",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void saveOfUpdate(@RequestBody TenlongBean tenlongBean){
 
@@ -40,7 +41,7 @@ public class TenlongAPIController {
 
     //接收傳來的JSON物件並存到DB
     //將HTTP狀態設為200
-    @PostMapping(value="/api/tenlong/save",consumes = "application/json")
+    @PostMapping(value="/save",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void save(@RequestBody List<TenlongBean> tenlongBeanList){
         //將爬蟲傳來的資料存到DB
@@ -48,7 +49,7 @@ public class TenlongAPIController {
     }
 
     //顯示
-    @GetMapping("/api/tenlong/lists/{catelog}")
+    @GetMapping("/lists/{catelog}")
     public PageInfo<TenlongBean> lists(@PathVariable String catelog, @RequestParam(defaultValue = "1") Integer pg){
 
         //查詢前設定開始頁,每頁幾頁
@@ -60,7 +61,7 @@ public class TenlongAPIController {
         return pages;
     }
 
-    @GetMapping("/api/tenlong/query/{catelog}")
+    @GetMapping("/query/{catelog}")
     public PageInfo<TenlongBean> queryBook(@PathVariable String catelog,@RequestParam(defaultValue = "") String qs, @RequestParam(defaultValue = "1") Integer pg){
         String queryStr = null;
         if(qs != null && !"".equals(qs)){
