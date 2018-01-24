@@ -4,7 +4,9 @@ import job.admin.bean.GoldBean;
 import job.admin.service.GoldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,34 +21,36 @@ public class GoldAPIController {
     @Autowired
     private GoldService goldService;
 
-    //月份所有資料
+    //得到月份下所有日期的資料
     @ResponseBody
-    @RequestMapping(value = "/month/{monthDetail}")
+    @RequestMapping(value = "/monthdetail/{monthDetail}")
     public List<GoldBean> monthDetail(@PathVariable String monthDetail){
 
         return goldService.getMonthDetail(monthDetail);
     }
 
-    //得到月份
+    //得到該年所有月份
     @ResponseBody
-    @RequestMapping(value = "/{yy}")
+    @RequestMapping(value = "/month/{yy}")
     public List<String> month(@PathVariable Integer yy){
 
-        return goldService.getGoldMonth(String.valueOf(yy));
+        return goldService.getMonth(String.valueOf(yy));
     }
 
     //最低買進排行
     @ResponseBody
-    @RequestMapping(value = "/topbuy")
+    @RequestMapping(value = "/buytop")
     public List<GoldBean> topBuy(){
-        return goldService.getBuyTop();
+
+        return goldService.queryBuyTop();
     }
 
     //最高賣出排行
     @ResponseBody
-    @RequestMapping(value = "/topsell")
+    @RequestMapping(value = "/selltop")
     public List<GoldBean> topSell(){
-        return goldService.getSellTop();
+
+        return goldService.querySellTop();
     }
 
     //提供給爬蟲用的API,新增或更新DB資料

@@ -10,8 +10,9 @@
     </insert>
 
     <!--查詢-->
-    <select id="list" resultType="job.admin.bean.TenlongBean">
-        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong WHERE catelogs = #{catelog} ORDER BY pkid DESC
+    <select id="queryByCatelog" resultType="job.admin.bean.TenlongBean">
+        SELECT pkid,catelogs,bookname,sell,imgurl,bookurl,checkdate from tenlong
+        WHERE catelogs = #{catelog} ORDER BY pkid DESC
     </select>
 
     <!--關鍵字查詢-->

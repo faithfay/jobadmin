@@ -8,20 +8,16 @@ import job.admin.util.JobUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RequestMapping("/api/tenlong")
 @RestController
 public class TenlongAPIController {
 
     //透過spring 外部設定檔的設定利用@Value抓到參數檔的值
-    @Value("${tenlong.page.size}")
+    @Value("${page.size}")
     private Integer pgsize;
 
     @Autowired
@@ -55,7 +51,7 @@ public class TenlongAPIController {
         //查詢前設定開始頁,每頁幾頁
         PageHelper.startPage(pg,pgsize);
         //去查詢
-        List<TenlongBean> lists = tenlongService.list(catelog);
+        List<TenlongBean> lists = tenlongService.queryByCatelog(catelog);
         //將分頁好的結果集返回頁面
         PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,10);
         return pages;

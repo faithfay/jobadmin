@@ -3,8 +3,6 @@ package job.admin.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import job.admin.bean.TenlongBean;
-import job.admin.service.GoldService;
-import job.admin.service.RateService;
 import job.admin.service.TenlongService;
 import job.admin.util.JobUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class TenlongController {
     private JobUtil jobUtil;
 
     //透過spring 外部設定檔的設定利用@Value抓到參數檔的值
-    @Value("${tenlong.page.size}")
+    @Value("${page.size}")
     private Integer pgsize;
 
     //偽天瓏圖案顯示
@@ -52,7 +50,7 @@ public class TenlongController {
         }else{
             //查詢前設定開始頁,每頁幾頁
             PageHelper.startPage(pg,pgsize);
-            lists = tenlongService.list(catelog);
+            lists = tenlongService.queryByCatelog(catelog);
         }
         //將分頁好的結果集返回頁面
         PageInfo<TenlongBean> pages = new PageInfo<TenlongBean>(lists,5);

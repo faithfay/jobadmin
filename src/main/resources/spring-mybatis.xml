@@ -4,9 +4,16 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!--只掃描業務邏輯-->
+    <!--只掃描業務邏輯,跟資料庫行為有關的-->
     <context:component-scan base-package="job.admin">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
@@ -53,12 +60,14 @@
     </bean>
 
     <!-- SPRING TRANSACTION管理 -->
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="sqlite" />
     </bean>
-    <!-- 開啟對TRANSACTION註解功能 -->
-    <tx:annotation-driven transaction-manager="txManager"/>
 
+    <!-- 開啟對TRANSACTION註解功能 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--設定transaction進入點,哪些CLASS及METHOD需要使用transaction-->
     <aop:config>
         <!--
         * job.admin.service..*(..)
@@ -68,12 +77,14 @@
         <aop:pointcut id="txPoint" expression="execution(* job.admin.service..*(..))"/>
         <aop:advisor advice-ref="txAdvic" pointcut-ref="txPoint"/>
     </aop:config>
-    <tx:advice id="txAdvic" transaction-manager="txManager">
+    <aop:aspectj-autoproxy  proxy-target-class="true"/>
+    <tx:advice id="txAdvic" transaction-manager="transactionManager">
         <tx:attributes>
             <!--所有方法都是transaction的方法-->
             <tx:method name="*"/>
-            <!--只要是query開頭的都是查詢,所以讓他唯讀-->
+            <!--只要是query&get開頭的都是查詢,所以讓他唯讀-->
             <tx:method name="query*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 </beans>

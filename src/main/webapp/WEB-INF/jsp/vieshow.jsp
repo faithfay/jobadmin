@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${movielist}" var="movie">
+        <c:forEach items="${movielist.list}" var="movie">
             <tr>
                 <td>${movie.pkid}</td>
                 <td><a href="${movie.murl}" title="${movie.mname}">${movie.mname}</a></td>

@@ -23,9 +23,9 @@ public class TenlongService implements TenlongDao{
         tenlongDao.checkBook(tenlongBean);
     }
 
-    public List<TenlongBean> list(String catelog) {
+    public List<TenlongBean> queryByCatelog(String catelog) {
 
-        return tenlongDao.list(catelog);
+        return tenlongDao.queryByCatelog(catelog);
     }
 
     public List<TenlongBean> queryBook(String catelog, String queryStr) {

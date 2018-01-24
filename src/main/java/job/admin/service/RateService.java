@@ -29,9 +29,9 @@ public class RateService {
         return rateDao.getMonthDetail(rate_name,monthDetail);
     }
 
-    public List<RateBean> getLowPriceTop(String rate_name) {
+    public List<RateBean> queryLowPriceTop(String rate_name) {
 
-        return rateDao.getLowPriceTop(rate_name);
+        return rateDao.queryLowPriceTop(rate_name);
     }
 
     public List<String> getRateName(){

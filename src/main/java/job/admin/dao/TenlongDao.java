@@ -11,7 +11,7 @@ public interface TenlongDao {
 
     void checkBook(TenlongBean tenlongBean);
 
-    List<TenlongBean> list(@Param(value = "catelog") String catelog);
+    List<TenlongBean> queryByCatelog(@Param(value = "catelog") String catelog);
 
     List<TenlongBean> queryBook(@Param(value = "catelog") String catelog,@Param(value = "queryStr") String queryStr);
 }

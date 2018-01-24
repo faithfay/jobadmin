@@ -17,7 +17,7 @@ public class GoldController {
     public String gold(Model mod){
 
         //預設顯示所有年份
-        mod.addAttribute("dyear",goldService.getGoldYear());
+        mod.addAttribute("dyear",goldService.getYear());
         return "gold";
     }
 }

@@ -14,41 +14,54 @@ public class GoldService {
     @Autowired
     private GoldDao goldDao;
 
+    public void saveOrUpdate(Map<String,String> data){
+
+        goldDao.saveOrUpdate(data);
+    }
+
+    //得到該月份下所有日期的資料
     public List<GoldBean> getMonthDetail(String monthDetail){
 
         return goldDao.getMonthDetail(monthDetail);
     }
+
     //查詢條件過濾checkdate得到所有年
-    public List<String> getGoldYear(){
+    public List<String> getYear(){
 
         return goldDao.getYear();
     }
+
     //帶入年分查資料庫該年分所有有資料的月份
-    public List<String> getGoldMonth(String yyyy){
+    public List<String> getMonth(String yyyy){
 
         return goldDao.getMonth(yyyy);
     }
+
     //買進最低價排行
-    public List<GoldBean> getBuyTop(){
+    public List<GoldBean> queryBuyTop(){
 
-        return goldDao.getBuyTop();
+        return goldDao.queryBuyTop();
     }
+
     //賣出最高價排行
-    public List<GoldBean> getSellTop(){
+    public List<GoldBean> querySellTop(){
 
-        return goldDao.getSellTop();
+        return goldDao.querySellTop();
     }
-    //網頁爬到的資料存到DB
+
+    //新增
     public void save(Map<String,String> data){
 
         goldDao.save(data);
     }
-    //爬到的資料做更新
+
+    //更新
     public void update(Map<String,String> data){
 
         goldDao.update(data);
     }
-    //判斷有沒有今天的資料
+
+    //得到目前日期資料
     public List<GoldBean> getCurrentData(String checkdate){
 
         return goldDao.getCurrentData(checkdate);

@@ -21,7 +21,7 @@ public class RateAPIController {
 
     //得到該年所有月份
     @ResponseBody
-    @RequestMapping(value = "/{yy}")
+    @RequestMapping(value = "/month/{yy}")
     public List<String> year(@PathVariable Integer yy){
 
         return rateService.getMonth(String.valueOf(yy));
@@ -29,8 +29,9 @@ public class RateAPIController {
 
     //月份所有資料
     @ResponseBody
-    @RequestMapping(value = "/month/{rateName}/{monthDetail}")
+    @RequestMapping(value = "/monthdetail/{rateName}/{monthDetail}")
     public List<RateBean> monthDetail(@PathVariable String rateName,@PathVariable String monthDetail){
+
         return rateService.getMonthDetail(rateName,monthDetail);
     }
 
@@ -38,6 +39,7 @@ public class RateAPIController {
     @ResponseBody
     @RequestMapping(value = "/name")
     public List<String> name(){
+
         return rateService.getRateName();
     }
 
@@ -45,9 +47,9 @@ public class RateAPIController {
     @RequestMapping(value = "/top")
     public List<RateBean> top(@RequestParam(value = "rn",defaultValue = "") String name){
         if ("".equals(name)){
-            return rateService.getLowPriceTop("日圓");
+            return rateService.queryLowPriceTop("日圓");
         }else{
-            return rateService.getLowPriceTop(name);
+            return rateService.queryLowPriceTop(name);
         }
     }
 

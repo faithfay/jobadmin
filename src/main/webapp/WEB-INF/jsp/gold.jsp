@@ -21,7 +21,7 @@
                 bindto: '#chart',
                 data: {
                     mimeType: 'json',
-                    url:"${urlpath}/api/gold/topbuy",
+                    url:"${urlpath}/api/gold/buytop",
                     keys: {x:'checkDate',value: ['buy']},
                     names:{'buy':'買進黃金'},
                     //顯示點選的點
@@ -47,7 +47,7 @@
                 var mm = $(this).text();
                 chart.load({
                     mimeType: 'json',
-                    url:"${urlpath}/api/gold/month/" + mm,
+                    url:"${urlpath}/api/gold/monthdetail/" + mm,
                     //定義X軸的值,線有兩條,buy,sell
                     keys: {x:'checkDate',value: ['buy','sell']},
                     //定義線的名稱
@@ -60,7 +60,7 @@
             $("#a-topsell").click(function(){
                 chart.load({
                     mimeType: 'json',
-                    url:"${urlpath}/api/gold/topsell",
+                    url:"${urlpath}/api/gold/selltop",
                     keys: {x:'checkDate',value: ['sell']},
                     names:{'sell':'賣出黃金'},
                     unload: ['buy']
@@ -88,7 +88,7 @@
                     //得到月份所有資料
                     $.ajax({
                         type: "post",
-                        url: "api/gold/" + dynamicID,
+                        url: "api/gold/month/" + dynamicID,
                         success: function(result){
                             $.each(result,function(index,data) {
                                 $('<button type="button" class="btn btn-info"></button>').text(data).appendTo(btsDiv);
@@ -106,7 +106,7 @@
                         $('#month-detail > div').attr('id',$(this).text());
                         $.ajax({
                             type: "post",
-                            url: "api/gold/" + dynamicID,
+                            url: "api/gold/month" + dynamicID,
                             success: function(result){
                                 $.each(result,function(index,data) {
                                     $('<button type="button" class="btn btn-info"></button>').text(data).appendTo($('#month-detail > div'));

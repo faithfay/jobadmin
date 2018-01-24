@@ -2,36 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="job.admin.dao.GoldDao">
 
-    <!--查年份-->
     <select id="getYear" resultType="String">
-        SELECT DISTINCT substr(checkdate,1,4) YYYY  FROM gold ORDER BY YYYY DESC
+        SELECT DISTINCT substr(checkdate,1,4) YYYY FROM gold
+        ORDER BY YYYY DESC
     </select>
-    <!--查月份-->
+
     <select id="getMonth" resultType="String">
-        SELECT DISTINCT substr(checkdate,1,7) MM  FROM gold WHERE checkdate LIKE "${yyyy + '-%'}" ORDER BY MM DESC
+        SELECT DISTINCT substr(checkdate,1,7) MM FROM gold
+        WHERE checkdate LIKE "${yyyy + '-%'}" ORDER BY MM DESC
     </select>
-    <!--查買進最低價-->
-    <select id="getBuyTop" resultType="job.admin.bean.GoldBean">
-        SELECT buy,checkdate FROM gold ORDER BY buy LIMIT 15
+
+    <select id="queryBuyTop" resultType="job.admin.bean.GoldBean">
+        SELECT buy,checkdate FROM gold
+        ORDER BY buy LIMIT 15
     </select>
-    <!--查賣出最高價-->
-    <select id="getSellTop" resultType="job.admin.bean.GoldBean">
-        SELECT sell,checkdate FROM gold ORDER BY sell DESC LIMIT 15
+
+    <select id="querySellTop" resultType="job.admin.bean.GoldBean">
+        SELECT sell,checkdate FROM gold
+        ORDER BY sell DESC LIMIT 15
     </select>
-    <!--月份詳細資料-->
+
     <select id="getMonthDetail" resultType="job.admin.bean.GoldBean">
-        SELECT pkid,buy,sell,checkdate,checktime FROM gold WHERE checkdate LIKE "${monthDetail + '%'}"
+        SELECT pkid,buy,sell,checkdate,checktime FROM gold
+        WHERE checkdate LIKE "${monthDetail + '%'}"
     </select>
-    <!--查看當日是否已經有資料-->
+
     <select id="getCurrentData" resultType="job.admin.bean.GoldBean">
-        SELECT pkid,buy,sell,checkdate,checktime FROM gold WHERE checkdate = #{checkdate}
+        SELECT pkid,buy,sell,checkdate,checktime FROM gold
+        WHERE checkdate = #{checkdate}
     </select>
-    <!--新增資料-->
+
     <insert id="save">
-        INSERT INTO gold(buy,sell,checkdate,checktime) VALUES (#{buy},#{sell},#{checkdate},#{checktime})
+        INSERT INTO gold(buy,sell,checkdate,checktime)
+        VALUES (#{buy},#{sell},#{checkdate},#{checktime})
     </insert>
-    <!--更新資料-->
+
     <update id="update">
-        UPDATE gold SET buy = #{buy},sell = #{sell},checktime = #{checktime} WHERE checkdate = #{checkdate}
+        UPDATE gold SET buy = #{buy},sell = #{sell},checktime = #{checktime}
+        WHERE checkdate = #{checkdate}
     </update>
 </mapper>

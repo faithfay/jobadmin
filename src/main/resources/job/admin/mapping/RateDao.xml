@@ -3,34 +3,44 @@
 <mapper namespace="job.admin.dao.RateDao">
 
     <select id="getYear" resultType="String">
-        SELECT DISTINCT substr(checkdate,1,4) YYYY  FROM rate WHERE rate_name = #{rate_name} ORDER BY YYYY DESC
+        SELECT DISTINCT substr(checkdate,1,4) YYYY  FROM rate
+        WHERE rate_name = #{rate_name}
+        ORDER BY YYYY DESC
     </select>
 
     <select id="getMonth" resultType="String">
-        SELECT DISTINCT substr(checkdate,1,7) MM  FROM rate WHERE rate_name = #{rate_name} AND checkdate LIKE "${yyyy + '-%'}" ORDER BY MM DESC
+        SELECT DISTINCT substr(checkdate,1,7) MM  FROM rate
+        WHERE rate_name = #{rate_name} AND checkdate LIKE "${yyyy + '-%'}"
+        ORDER BY MM DESC
     </select>
 
-    <select id="getLowPriceTop" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} ORDER BY rate LIMIT 10
+    <select id="queryLowPriceTop" resultType="job.admin.bean.RateBean">
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate
+        WHERE rate_name = #{rate_name}
+        ORDER BY rate LIMIT 10
     </select>
 
     <select id="getMonthDetail" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} AND checkdate LIKE "${monthDetail + '%'}"
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate
+        WHERE rate_name = #{rate_name} AND checkdate LIKE "${monthDetail + '%'}"
     </select>
 
     <select id="getRateName" resultType="String">
-        SELECT  DISTINCT rate_name FROM rate
+        SELECT DISTINCT rate_name FROM rate
     </select>
 
     <select id="getCurrentData" resultType="job.admin.bean.RateBean">
-        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
+        SELECT pkid,rate_name,rate,checkdate,checktime FROM rate
+        WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
     </select>
 
     <insert id="save">
-        INSERT INTO rate(rate_name,rate,checkdate,checktime) VALUES (#{rate_name},#{rate},#{checkdate},#{checktime})
+        INSERT INTO rate(rate_name,rate,checkdate,checktime)
+        VALUES (#{rate_name},#{rate},#{checkdate},#{checktime})
     </insert>
 
     <update id="update">
-        UPDATE rate SET rate = #{rate},checktime = #{checktime} WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
+        UPDATE rate SET rate = #{rate},checktime = #{checktime}
+        WHERE rate_name = #{rate_name} AND checkdate = #{checkdate}
     </update>
 </mapper>

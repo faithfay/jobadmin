@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface VieshowDao {
 
+    //新增或更新資料
     void saveOrUpdate(VieshowBean vieshowBeanList);
 
-    List<VieshowBean> queryMove(@Param("checkdate") String checkdate,@Param("mname") String mname);
+    //查詢電影
+    List<VieshowBean> queryMove(@Param("mname") String mname);
 }

@@ -3,10 +3,10 @@
 <mapper namespace="job.admin.dao.VieshowDao">
 
     <select id="queryMove" resultType="job.admin.bean.VieshowBean">
-        SELECT pkid,mname,murl,mimg,checkdate FROM vieshow WHERE checkdate LIKE "${checkdate + '%'}"
+        SELECT pkid,mname,murl,mimg,checkdate FROM vieshow
 
         <if test="mname != null and test != ''">
-            AND mname LIKE "${'%' + mname + '%'}"
+            WHERE mname LIKE "${'%' + mname + '%'}"
         </if>
 
         ORDER BY pkid DESC

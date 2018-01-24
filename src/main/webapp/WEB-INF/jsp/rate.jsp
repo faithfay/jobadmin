@@ -21,7 +21,7 @@
                 bindto: '#chart',
                 data: {
                     mimeType: 'json',
-                    url:"${urlpath}/json/rate/top",
+                    url:"${urlpath}/api/rate/top",
                     keys: {x:'checkdate',value: ['rate']},
                     names:{'rate':'匯率'},
                     selection: {enabled: true},
@@ -43,12 +43,11 @@
                 }
             });
 
-            //
             $('.nav-item a').on('click',function(){
                 $('#h_title').text($(this).text());
                 chart.load({
                     mimeType: 'json',
-                    url:"${urlpath}/json/rate/top?rn=" + $(this).text(),
+                    url:"${urlpath}/api/rate/top?rn=" + $(this).text(),
                     keys: {x:'checkdate',value: ['rate']},
                     names:{'rate': $(this).text() + '匯率'},
                     unload: true
