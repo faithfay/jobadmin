@@ -14,21 +14,10 @@ public class StockService {
     @Autowired
     private StockDao stockDao;
 
-    public void saveStock(StockBean stockBean){
 
-        stockDao.saveStock(stockBean);
-    }
+    public void saveStock(StockBean stockList){
 
-    //股票分類新增或更新
-    public void saveGroup(StockGroupBean stockGroupList){
-
-        stockDao.saveGroup(stockGroupList);
-    }
-
-    //查詢是否有資料
-    public List<StockGroupBean> queryGroup(){
-
-        return stockDao.queryGroup();
+        stockDao.saveStock(stockList);
     }
 
 }

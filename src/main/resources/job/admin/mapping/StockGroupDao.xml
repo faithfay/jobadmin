@@ -2,17 +2,14 @@
         <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="job.admin.dao.StockDao">
+<mapper namespace="job.admin.dao.StockGroupDao">
+    <select id="queryGroup" resultType="job.admin.bean.StockGroupBean">
+        SELECT pkid,stockCategory FROM stock_group
+    </select>
 
-
-
-<select id="queryGroup" resultType="job.admin.bean.StockGroupBean">
-    SELECT pkid,stockCategory FROM stock_group
-</select>
-
-<!--API 新增股票分類-->
-<insert id="saveGroup" parameterType="job.admin.bean.StockGroupBean" useGeneratedKeys="true" keyProperty="pkid">
-    INSERT INTO stock_group(stockCategory)
-    VALUES (#{stockCategory})
-</insert>
+    <!--API 新增股票分類-->
+    <insert id="saveGroup" parameterType="job.admin.bean.StockGroupBean" useGeneratedKeys="true" keyProperty="pkid">
+        INSERT INTO stock_group(stockCategory)
+        VALUES (#{stockCategory})
+    </insert>
 </mapper>

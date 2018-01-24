@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface StockDao {
 
-    void saveGroup(StockGroupBean stockGroupBean);
     void saveStock(StockBean stockBean);
 
-    List<StockGroupBean> queryGroup();
 
 }
