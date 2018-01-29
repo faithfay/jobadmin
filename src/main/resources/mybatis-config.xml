@@ -13,6 +13,8 @@
         <setting name="lazyLoadingEnabled" value="true"/>
         <!-- 是否全部都先載入,設成false表示需要時再載入 -->
         <setting name="aggressiveLazyLoading" value="fasle"/>
+
+        <!--<setting name="jdbcTypeForNull" value="NULL" />-->
     </settings>
 
     <typeAliases>

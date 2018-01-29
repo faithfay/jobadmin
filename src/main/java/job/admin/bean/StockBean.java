@@ -6,18 +6,14 @@ public class StockBean implements Serializable{
 
     private Integer pkid;
     private Integer gpkid;
-    private String stockName;
-    private String stockNumber;
-    private StockGroupBean stockGroupBean;
+    private Integer stockPrice;
 
     @Override
     public String toString() {
         return "StockBean{" +
                 "pkid=" + pkid +
                 ", gpkid=" + gpkid +
-                ", stockName='" + stockName + '\'' +
-                ", stockNumber='" + stockNumber + '\'' +
-                ", stockGroupBean=" + stockGroupBean +
+                ", stockPrice=" + stockPrice +
                 '}';
     }
 
@@ -37,27 +33,11 @@ public class StockBean implements Serializable{
         this.gpkid = gpkid;
     }
 
-    public String getStockName() {
-        return stockName;
+    public Integer getStockPrice() {
+        return stockPrice;
     }
 
-    public void setStockName(String stockName) {
-        this.stockName = stockName;
-    }
-
-    public String getStockNumber() {
-        return stockNumber;
-    }
-
-    public void setStockNumber(String stockNumber) {
-        this.stockNumber = stockNumber;
-    }
-
-    public StockGroupBean getStockGroupBean() {
-        return stockGroupBean;
-    }
-
-    public void setStockGroupBean(StockGroupBean stockGroupBean) {
-        this.stockGroupBean = stockGroupBean;
+    public void setStockPrice(Integer stockPrice) {
+        this.stockPrice = stockPrice;
     }
 }

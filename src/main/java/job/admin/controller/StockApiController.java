@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.HttpMethodConstraint;
 import java.util.List;
 
 @RequestMapping("/api/stock")
@@ -30,22 +32,10 @@ public class StockApiController {
     //新增股票分類
     @PostMapping(value="/save/group",consumes = "application/json")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void grpSave(@RequestBody List<StockGroupBean> stockGroupList){
+    public void saveGroup(@RequestBody List<StockGroupBean> stockGroupList){
 
-        List<StockGroupBean> datas = stockGroupService.queryGroup();
-
-        //判斷DB跟爬到的群組名稱進行比對,没比到就新增
         for(StockGroupBean stockGroupBean:stockGroupList){
-            boolean tag = false;
-            for(StockGroupBean dbStockGroupBean:datas){
-                if(dbStockGroupBean.getStockCategory().equals(stockGroupBean.getStockCategory())){
-                    tag = true;
-                    break;
-                }
-            }
-            if(!tag){
-                stockGroupService.saveGroup(stockGroupBean);
-            }
+            stockGroupService.saveGroup(stockGroupBean);
         }
     }
 }

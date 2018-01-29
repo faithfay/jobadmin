@@ -9,4 +9,5 @@ public interface StockGroupDao {
     void saveGroup(StockGroupBean stockGroupBean);
 
     List<StockGroupBean> queryGroup();
+
 }

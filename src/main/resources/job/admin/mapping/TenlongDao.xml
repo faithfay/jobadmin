@@ -26,14 +26,14 @@
 
     <!--API 檢查有沒有新書,沒有新增,已經有的更新-->
     <insert id="checkBook" parameterType="job.admin.bean.TenlongBean">
-        <selectKey resultType="int" order="BEFORE" keyProperty="totalcount" >
+        <selectKey resultType="int" order="BEFORE" keyProperty="totalCount" >
             SELECT count(*) FROM tenlong WHERE bookname = #{bookname} AND catelogs = #{catelogs}
         </selectKey>
-        <if test="totalcount == 0">
+        <if test="totalCount == 0">
             INSERT INTO tenlong(catelogs,bookname,sell,imgurl,bookurl,checkdate)
             VALUES (#{catelogs},#{bookname},#{sell},#{imgurl},#{bookurl},#{checkdate})
         </if>
-        <if test="totalcount > 0">
+        <if test="totalCount > 0">
             UPDATE  tenlong SET
             sell = #{sell},
             imgurl = #{imgurl},

@@ -1,8 +1,6 @@
 package job.admin.service;
 
-import job.admin.bean.StockBean;
 import job.admin.bean.StockGroupBean;
-import job.admin.dao.StockDao;
 import job.admin.dao.StockGroupDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,4 +25,5 @@ public class StockGroupService {
 
         return stockGroupDao.queryGroup();
     }
+
 }

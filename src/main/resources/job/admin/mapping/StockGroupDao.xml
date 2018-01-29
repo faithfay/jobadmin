@@ -9,7 +9,19 @@
 
     <!--API 新增股票分類-->
     <insert id="saveGroup" parameterType="job.admin.bean.StockGroupBean" useGeneratedKeys="true" keyProperty="pkid">
-        INSERT INTO stock_group(stockCategory)
-        VALUES (#{stockCategory})
+        <selectKey keyProperty="totalCount" resultType="int" order="BEFORE">
+            SELECT count(*) FROM stock_group
+            WHERE stockNumber = #{stockNumber}
+        </selectKey>
+        <if test="totalCount == 0">
+            INSERT INTO stock_group(stockCategory,stockName,stockNumber)
+            VALUES (#{stockCategory},#{stockName},#{stockNumber})
+        </if>
+        <if test="totalCount > 0">
+            UPDATE stock_group SET
+            stockCategory = #{stockCategory},
+            stockName = #{stockName}
+            WHERE stockNumber = #{stockNumber}
+        </if>
     </insert>
 </mapper>
